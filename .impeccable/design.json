@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-06T22:00:00Z",
+  "title": "Design System: BACKWARD®",
+  "extensions": {
+    "colorMeta": {
+      "navy": { "role": "primary", "displayName": "Navy BACKWARD" },
+      "gold": { "role": "secondary", "displayName": "Mostaza drop" },
+      "denim": { "role": "tertiary", "displayName": "Denim" },
+      "studio": { "role": "neutral", "displayName": "Blanco estudio" },
+      "fog": { "role": "neutral", "displayName": "Niebla" }
+    },
+    "typographyMeta": {
+      "wordmark": { "displayName": "Wordmark", "purpose": "Solo el BACKWARD® del hero." },
+      "display": { "displayName": "Display", "purpose": "Titulares de sección." }
+    },
+    "shadows": [
+      { "name": "photo", "value": "0 24px 40px -24px rgb(0 0 0 / .6)", "purpose": "Fotos de la tira de contactos." },
+      { "name": "patch-hover", "value": "0 10px 22px -10px rgb(0 0 0 / .45)", "purpose": "Parche al pasar el cursor." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Todas las transiciones de estado." },
+      { "name": "tape-backward", "value": "0.03px/ms + scrollY * 0.5", "purpose": "La cinta avanza hacia atrás; estática con reduced-motion." }
+    ],
+    "breakpoints": [ { "name": "mobile", "value": "720px" } ]
+  },
+  "components": [
+    {
+      "name": "Parche principal",
+      "kind": "button",
+      "refersTo": "patch-primary",
+      "description": "La acción principal: escribir para pedir.",
+      "html": "<a class=\"patch patch--gold\" href=\"#\">Pedir por DM</a>",
+      "css": ".patch{display:inline-flex;align-items:center;gap:.6rem;min-height:3.25rem;padding:.85rem 1.4rem;font:italic 900 1rem/1 Archivo,system-ui,sans-serif;font-stretch:112%;text-transform:uppercase;text-decoration:none;border-radius:3px;outline:1.5px dashed color-mix(in srgb,currentColor 55%,transparent);outline-offset:-6px;transition:transform .25s cubic-bezier(.22,1,.36,1)}.patch:hover{transform:translateY(-2px)}.patch--gold{background:#d8bc48;color:#151f32}"
+    },
+    {
+      "name": "Parche navy",
+      "kind": "button",
+      "refersTo": "patch-navy",
+      "description": "Acción secundaria sobre el blanco de estudio.",
+      "html": "<a class=\"patch patch--navy\" href=\"#\">Preguntar por mi talla</a>",
+      "css": ".patch--navy{background:#151f32;color:#f1f1ef}"
+    }
+  ],
+  "narrative": {
+    "northStar": "La etiqueta de cuero, ampliada",
+    "overview": "La web toma prestado todo de la ropa de BACKWARD®: el navy del logo y del parche, el blanco de estudio, el denim y el tartán. Los botones son parches con costura.",
+    "keyCharacteristics": ["Navy dominante", "Mostaza solo en la acción principal", "Fotografía real en marcos de estudio", "Cinta que avanza hacia atrás"],
+    "rules": [{ "name": "La regla de la etiqueta", "body": "La mostaza marca la acción; en más de dos sitios por pantalla deja de significar escríbenos.", "section": "colors" }],
+    "dos": ["Usar fotos reales de la marca", "Escribir como la marca, en español e inglés"],
+    "donts": ["Inventar precios, tallas o testimonios", "Mostaza como texto sobre blanco", "Tarjetas, degradados o ilustraciones"]
+  }
+}
