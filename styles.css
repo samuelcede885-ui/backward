@@ -436,6 +436,7 @@ body.is-locked { overflow: hidden; }
 }
 @media (max-width: 720px) {
   :root { --bar-h: 3.5rem; }
+  .bar__mark { font-size: .95rem; }
   .bar__nav { display: none; }
   .rail { grid-template-columns: 1fr; }
   .rail__title { flex-direction: row; align-items: center; padding: 1rem 1rem 1rem 1.1rem; }
