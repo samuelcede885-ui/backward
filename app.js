@@ -17,7 +17,7 @@
 
   const totals = () => {
     const sub = cart.reduce((sum, l) => sum + byId(l.id).price * l.qty, 0);
-    return { sub, del: S.delivery, total: sub + S.delivery };
+    return { sub, del: S.delivery, total: sub + (S.delivery || 0) };
   };
 
   /* ---------- Toast ---------- */
@@ -109,7 +109,7 @@
     const t = totals();
     $$('[data-mini]').forEach((el) => { el.innerHTML = html; });
     $$('[data-t-sub]').forEach((el) => { el.textContent = usd(t.sub); });
-    $$('[data-t-del]').forEach((el) => { el.textContent = t.del ? usd(t.del) : 'Gratis'; });
+    $$('[data-t-del]').forEach((el) => { el.textContent = t.del == null ? 'Por acordar' : t.del ? usd(t.del) : 'Gratis'; });
     $$('[data-t-total]').forEach((el) => { el.textContent = usd(t.total); });
     $('[data-checkout]').textContent = cart.length ? `Pagar ${usd(t.total)}` : 'Pagar';
     $('[data-amt-bs]').textContent = bs(t.total);
@@ -198,7 +198,7 @@
     return [
       `Hola BACKWARD, quiero hacer un pedido. Pedido ${orderId}`,
       ...lines,
-      `Delivery: ${t.del ? usd(t.del) : 'gratis'}`,
+      `Delivery: ${t.del == null ? 'por acordar' : t.del ? usd(t.del) : 'gratis'}`,
       `Total: ${usd(t.total)}${m === 'pago-movil' ? ` (${bs(t.total)})` : ''}`,
       `Pago: ${METHODS[m].label}`,
       `Ubicación: ${address.value.trim()}`,
@@ -277,6 +277,11 @@
     location.hash = METHODS[h] ? 'pago' : h === 'pago' ? 'carrito' : 'tienda';
   });
   $$('[data-view] h2').forEach((h) => h.setAttribute('tabindex', '-1'));
+
+  $('[data-search-jump]').addEventListener('click', () => { setTimeout(() => $('#search').focus({ preventScroll: true }), 400); });
+  const bar = $('[data-bar]'), banner = $('.banner');
+  const solid = () => bar.classList.toggle('is-solid', scrollY > banner.offsetHeight - bar.offsetHeight);
+  addEventListener('scroll', solid, { passive: true }); addEventListener('resize', solid); solid();
 
   renderGrid(); renderBag(); route();
 

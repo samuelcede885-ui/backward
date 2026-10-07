@@ -4,7 +4,7 @@
  */
 window.STORE = {
   currency: 'USD',
-  delivery: 0,                 // costo de delivery en USD; 0 = "Delivery gratis"
+  delivery: null,              // costo de delivery en USD; null = se acuerda por chat
   tasaBs: 200,                 // Bs por 1 USD para el monto de Pago Móvil (actualízala)
 
   // Adónde llega el comprobante. Si whatsapp está vacío se usa el DM de Instagram.
