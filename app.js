@@ -3,7 +3,9 @@
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
   const byId = (id) => S.products.find((p) => p.id === id);
+  const maxQty = (p) => (p.stock == null ? 10 : p.stock);
 
+  const nb = (t) => t.replace(/-/g, '\u2011'); // no partir "T-shirt"
   const usd = (n) => '$' + n.toFixed(2);
   const bs = (n) => (n * S.tasaBs).toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' Bs';
 
@@ -44,10 +46,13 @@
     grid.innerHTML = list.map((p) => `
       <li>
         <a class="card" href="#producto-${p.id}">
-          <span class="card__img"><img src="${p.img}" alt="${p.name}, ${p.model}" loading="lazy"></span>
-          <span class="card__name">${p.name}</span>
+          <span class="card__img">
+            <img src="${p.images[0]}" alt="${p.name}" loading="lazy">
+            ${p.images[1] ? `<img class="card__alt" src="${p.images[1]}" alt="" loading="lazy">` : ''}
+          </span>
+          <span class="card__name">${nb(p.name)}</span>
           <span class="card__model">${p.model}</span>
-          <span class="card__price">${usd(p.price)}${p.demo ? '<em>Ejemplo</em>' : ''}</span>
+          <span class="card__price">${usd(p.price)}</span>
         </a>
       </li>`).join('');
     $('[data-empty]').hidden = list.length > 0;
@@ -59,36 +64,45 @@
   let sel = { id: null, size: null, qty: 1 };
 
   const renderProduct = (p) => {
-    if (sel.id !== p.id) sel = { id: p.id, size: p.sizes.length === 1 ? p.sizes[0] : null, qty: 1 };
-    $('[data-p-img]', pv).src = p.img;
-    $('[data-p-img]', pv).alt = `${p.name}, ${p.model}`;
-    $('[data-p-name]', pv).textContent = p.name;
+    if (sel.id !== p.id) sel = { id: p.id, size: p.sizes.length === 1 ? p.sizes[0] : null, qty: 1, view: 0 };
+    if (sel.view == null || sel.view >= p.images.length) sel.view = 0;
+    $('[data-p-img]', pv).src = p.images[sel.view];
+    $('[data-p-img]', pv).alt = `${p.name}, foto ${sel.view + 1} de ${p.images.length}`;
+    $('[data-p-thumbs]', pv).innerHTML = p.images.length > 1 ? p.images.map((src, i) =>
+      `<button type="button" class="thumb" aria-pressed="${i === sel.view}" data-view-img="${i}" aria-label="Ver foto ${i + 1}"><img src="${src}" alt=""></button>`).join('') : '';
+    $('[data-p-name]', pv).textContent = nb(p.name);
     $('[data-p-model]', pv).textContent = p.model;
     $('[data-p-price]', pv).textContent = usd(p.price);
-    $('[data-p-demo]', pv).hidden = !p.demo;
     $('[data-p-desc]', pv).textContent = p.desc;
-    $('[data-p-stock]', pv).textContent = p.stock > 0 ? `${p.stock} uds` : 'Agotado';
-    $('[data-p-stockbar]', pv).style.transform = `scaleX(${Math.min(1, p.stock / p.stockMax)})`;
-    $('[data-p-stockbar]', pv).classList.toggle('is-low', p.stock / p.stockMax < 0.35);
+    const hasStock = p.stock != null;
+    $('.stock', pv).hidden = !hasStock;
+    if (hasStock) {
+      $('[data-p-stock]', pv).textContent = p.stock > 0 ? `${p.stock} uds` : 'Agotado';
+      $('[data-p-stockbar]', pv).style.transform = `scaleX(${Math.min(1, p.stock / p.stockMax)})`;
+      $('[data-p-stockbar]', pv).classList.toggle('is-low', p.stock / p.stockMax < 0.35);
+    }
     $('[data-p-qty]', pv).textContent = sel.qty;
     $('[data-p-error]', pv).hidden = true;
     $('[data-p-sizes]', pv).innerHTML = p.sizes.map((s) =>
       `<button type="button" class="size" aria-pressed="${s === sel.size}" data-size="${s}">${s}</button>`).join('');
     const add = $('[data-add]', pv);
-    add.disabled = p.stock < 1;
-    add.textContent = p.stock < 1 ? 'Agotado' : 'Agregar al carrito';
+    const soldOut = p.stock != null && p.stock < 1;
+    add.disabled = soldOut;
+    add.textContent = soldOut ? 'Agotado' : 'Agregar al carrito';
   };
 
   pv.addEventListener('click', (e) => {
     const p = byId(sel.id); if (!p) return;
+    const thumb = e.target.closest('[data-view-img]');
+    if (thumb) { sel.view = Number(thumb.dataset.viewImg); renderProduct(p); return; }
     const size = e.target.closest('[data-size]');
     if (size) { sel.size = size.dataset.size; renderProduct(p); return; }
     const step = e.target.closest('[data-step]');
-    if (step) { sel.qty = Math.max(1, Math.min(p.stock, sel.qty + Number(step.dataset.step))); $('[data-p-qty]', pv).textContent = sel.qty; return; }
+    if (step) { sel.qty = Math.max(1, Math.min(maxQty(p), sel.qty + Number(step.dataset.step))); $('[data-p-qty]', pv).textContent = sel.qty; return; }
     if (e.target.closest('[data-add]')) {
       if (!sel.size) { $('[data-p-error]', pv).hidden = false; return; }
       const line = cart.find((l) => l.id === p.id && l.size === sel.size);
-      if (line) line.qty = Math.min(p.stock, line.qty + sel.qty); else cart.push({ id: p.id, size: sel.size, qty: sel.qty });
+      if (line) line.qty = Math.min(maxQty(p), line.qty + sel.qty); else cart.push({ id: p.id, size: sel.size, qty: sel.qty });
       saveCart();
       say(`${p.name} talla ${sel.size} agregado al carrito`);
       location.hash = 'carrito';
@@ -104,7 +118,7 @@
   const renderMini = () => {
     const html = cart.map((l) => {
       const p = byId(l.id);
-      return `<li><img src="${p.img}" alt=""><span><strong>${l.qty} ${p.name}</strong>Talla ${l.size}</span><span>${usd(p.price * l.qty)}</span></li>`;
+      return `<li><img src="${p.images[0]}" alt=""><span><strong>${l.qty} ${nb(p.name)}</strong>Talla ${l.size}</span><span>${usd(p.price * l.qty)}</span></li>`;
     }).join('');
     const t = totals();
     $$('[data-mini]').forEach((el) => { el.innerHTML = html; });
@@ -122,9 +136,9 @@
       const p = byId(l.id);
       return `
         <li class="line">
-          <img src="${p.img}" alt="">
+          <img src="${p.images[0]}" alt="">
           <div class="line__body">
-            <p class="line__name">${p.name} <span>${p.model}</span></p>
+            <p class="line__name">${nb(p.name)} <span>${p.model}</span></p>
             <div class="line__sizes" role="group" aria-label="Talla de ${p.name}">
               ${p.sizes.map((s) => `<button type="button" class="size size--sm" aria-pressed="${s === l.size}" data-line="${i}" data-line-size="${s}">${s}</button>`).join('')}
             </div>
@@ -151,13 +165,13 @@
       if (b.dataset.lineSize) l.size = b.dataset.lineSize;
       if (b.dataset.lineStep) {
         l.qty += Number(b.dataset.lineStep);
-        if (l.qty < 1) cart.splice(Number(b.dataset.line), 1); else l.qty = Math.min(p.stock, l.qty);
+        if (l.qty < 1) cart.splice(Number(b.dataset.line), 1); else l.qty = Math.min(maxQty(p), l.qty);
       }
       if (b.hasAttribute('data-line-remove')) cart.splice(Number(b.dataset.line), 1);
       // Unir líneas que quedaron con el mismo producto y talla
       cart = cart.reduce((acc, x) => {
         const same = acc.find((y) => y.id === x.id && y.size === x.size);
-        if (same) same.qty = Math.min(byId(x.id).stock, same.qty + x.qty); else acc.push(x);
+        if (same) same.qty = Math.min(maxQty(byId(x.id)), same.qty + x.qty); else acc.push(x);
         return acc;
       }, []);
       saveCart(); renderCart(); return;

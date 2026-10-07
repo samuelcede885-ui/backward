@@ -16,41 +16,45 @@ window.STORE = {
   pagoMovil: { cedula: '12.640.559', telefono: '04241764709', banco: 'Provincial' },
   binance: { payId: '1058945117' },
 
-  // PRODUCTOS DE EJEMPLO (demo: true muestra "Precio de ejemplo").
-  // Reemplazar por el catálogo real de backward.mitiendanube.com.
+  // Catálogo de backward.mitiendanube.com (nombres y precios de la tienda).
+  // images[0] es la foto principal; images[1] la otra cara de la franela.
+  // sizes: PENDIENTE DE CONFIRMAR (S–XL por defecto). stock: null oculta la barra de stock.
   products: [
     {
-      id: 'denim-vintage',
-      name: 'Denim ancho',
-      model: 'Lavado vintage',
-      price: 45,
-      img: 'assets/img/drop-denim.jpg',
-      sizes: ['28', '30', '32', '34', '36'],
-      stock: 14, stockMax: 20,
-      desc: 'Jean de corte ancho con lavado vintage y parche de cuero BACKWARD® en la pretina. Cae largo sobre el pie.',
-      demo: true
+      id: 'red-boxy', name: 'Red Boxy T-shirt', model: 'Boxy fit · Rojo', price: 25,
+      images: ['assets/img/products/red-1.jpg', 'assets/img/products/red-2.jpg'],
+      sizes: ['S', 'M', 'L', 'XL'], stock: null,
+      desc: 'Franela boxy roja. Al frente: BACKWARD® "Cowboy Stuff – Exclusive Piece", con los caballos y la estrella. Espalda lisa.'
     },
     {
-      id: 'tee-logo',
-      name: 'Tee negra',
-      model: 'Logo gráfico',
-      price: 25,
-      img: 'assets/img/calle-tee.jpg',
-      sizes: ['S', 'M', 'L', 'XL'],
-      stock: 22, stockMax: 30,
-      desc: 'Camiseta negra con el logotipo BACKWARD® estampado en la espalda.',
-      demo: true
+      id: 'dark-grey-boxy', name: 'Dark Grey Boxy T-shirt', model: 'Boxy fit · Gris oscuro', price: 25,
+      images: ['assets/img/products/dark-grey-1.jpg', 'assets/img/products/dark-grey-2.jpg'],
+      sizes: ['S', 'M', 'L', 'XL'], stock: null,
+      desc: 'Franela boxy gris oscuro. Espalda: la bota vaquera de BACKWARD STUDIOS© ("Cowboy boot – Exclusive item", "New movement based in Venezuela"). Al frente: "Cowboy // Stuff©".'
     },
     {
-      id: 'hoodie-gris',
-      name: 'Hoodie gris',
-      model: 'Básico',
-      price: 40,
-      img: 'assets/img/estudio-hoodie.jpg',
-      sizes: ['S', 'M', 'L', 'XL'],
-      stock: 6, stockMax: 20,
-      desc: 'Hoodie gris de corte holgado con capucha.',
-      demo: true
+      id: 'white-boxy', name: 'White Boxy T-shirt', model: 'Boxy fit · Blanco', price: 25,
+      images: ['assets/img/products/white-1.jpg', 'assets/img/products/white-2.jpg'],
+      sizes: ['S', 'M', 'L', 'XL'], stock: null,
+      desc: 'Franela boxy blanca con el estampado de los mocasines de BACKWARD STUDIOS. La otra cara es lisa.'
+    },
+    {
+      id: 'forest-green-boxy', name: 'Forest Green Boxy T-shirt', model: 'Boxy fit · Verde bosque', price: 25,
+      images: ['assets/img/products/forest-green-1.jpg', 'assets/img/products/forest-green-2.jpg'],
+      sizes: ['S', 'M', 'L', 'XL'], stock: null,
+      desc: 'Franela boxy verde bosque. Espalda: BACKWARD® Lamp Design, la lámpara naranja ("Creative department // Inspired by culture"). Al frente: "Italian lamp designed in 1965" y "Minimalism – Art and aesthetics".'
+    },
+    {
+      id: 'granite-boxy', name: 'Granite Boxy T-shirt', model: 'Boxy fit · Granito', price: 25,
+      images: ['assets/img/products/granite-1.jpg', 'assets/img/products/granite-2.jpg'],
+      sizes: ['S', 'M', 'L', 'XL'], stock: null,
+      desc: 'Franela boxy granito con letras color durazno. Espalda: "The Essential Luxury©". Al frente: "Studios© Backward".'
+    },
+    {
+      id: 'navy-blue-boxy', name: 'Navy Blue Boxy T-shirt', model: 'Boxy fit · Azul marino', price: 25,
+      images: ['assets/img/products/navy-1.jpg', 'assets/img/products/navy-2.jpg'],
+      sizes: ['S', 'M', 'L', 'XL'], stock: null,
+      desc: 'Franela boxy azul marino. Al frente: "Backward Classic" ("Classic daily aesthetics // Inspired by culture") con las estrellas. Espalda lisa.'
     }
   ]
 };

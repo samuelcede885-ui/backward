@@ -56,7 +56,7 @@
         </label>
       </header>
       <ul class="grid" data-grid></ul>
-      <p class="shop__empty" data-empty hidden>No encontramos nada con ese nombre. Prueba con "denim", "tee" o "hoodie".</p>
+      <p class="shop__empty" data-empty hidden>No encontramos nada con ese nombre. Prueba con un color: "red", "navy", "white"…</p>
     </section>
 
     <section id="culture" class="culture" aria-labelledby="culture-title">
@@ -106,11 +106,11 @@
 
   <!-- Vistas de compra: se muestran según el #hash -->
   <div class="screen" data-view="producto" hidden role="dialog" aria-modal="true" aria-label="Producto">
-    <div class="screen__media"><img data-p-img src="assets/img/drop-denim.jpg" alt=""></div>
+    <div class="screen__media"><div class="gallery"><img data-p-img src="assets/img/products/red-1.jpg" alt=""><div class="thumbs" data-p-thumbs></div></div></div>
     <div class="panel">
       <a class="back" href="#tienda" aria-label="Volver a la tienda"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg> Tienda</a>
       <h2 class="panel__title"><span data-p-name></span><small data-p-model></small></h2>
-      <p class="price"><span data-p-price></span><span class="price__note" data-p-demo hidden>Precio de ejemplo</span></p>
+      <p class="price"><span data-p-price></span></p>
       <ul class="pays" aria-label="Métodos de pago">
         <li class="pay pay--movil">Pago Móvil</li><li class="pay pay--binance">Binance</li><li class="pay pay--cash">Efectivo</li>
       </ul>
