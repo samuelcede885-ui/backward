@@ -18,7 +18,7 @@ window.STORE = {
 
   // Catálogo de backward.mitiendanube.com (nombres y precios de la tienda).
   // images[0] es la foto principal; images[1] la otra cara de la franela.
-  // sizes: PENDIENTE DE CONFIRMAR (S–XL por defecto). stock: null oculta la barra de stock.
+  // sizes: S, M, L y XL (confirmadas). stock: null oculta la barra de stock.
   products: [
     {
       id: 'red-boxy', name: 'Red Boxy T-shirt', model: 'Boxy fit · Rojo', price: 25,
