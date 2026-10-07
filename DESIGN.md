@@ -12,6 +12,12 @@ colors:
   ink-soft: "#4a5363"
   denim: "#2c3e4e"
   gold: "#d8bc48"
+  stock-ok: "#4fb477"
+  error: "#b3261e"
+  pay-movil: "#5b2fc9"
+  pay-binance: "#1e2026"
+  pay-binance-text: "#f0b90b"
+  pay-cash: "#17773f"
 typography:
   wordmark:
     fontFamily: "Archivo, system-ui, sans-serif"
@@ -39,6 +45,11 @@ typography:
     letterSpacing: "0.01em"
 rounded:
   patch: "3px"
+  chip: "8px"
+  card: "14px"
+  panel: "22px"
+  panel-corner: "3.5rem"
+  pill: "999px"
   avatar: "50%"
 spacing:
   pad: "clamp(1rem, 4vw, 3.5rem)"
@@ -91,7 +102,7 @@ Un navy dominante, el blanco del estudio y un único acento mostaza tomado de la
 - **Navy BACKWARD** (#151F32): el fondo de la cabecera, el hero, la sección culture y el cierre; el color del logo y del parche de cuero.
 
 ### Secondary
-- **Mostaza drop** (#D8BC48): solo para la acción principal ("Pedir por DM") y el "Escríbenos." del cierre, además del anillo de foco y la selección de texto. Nunca como texto sobre el blanco de estudio (1.7:1).
+- **Mostaza drop** (#D8BC48): las acciones de compra ("Comprar ahora", "Agregar al carrito", "Pagar", "Enviar comprobante"), el selector de cantidad, el sello "Delivery gratis" del banner y el "Escríbenos." del cierre; también el anillo de foco y la selección. Nunca como texto sobre el blanco de estudio (1.7:1).
 
 ### Tertiary
 - **Denim** (#2C3E4E): el tartán, los separadores de la cinta y la barra de scroll.
@@ -126,6 +137,8 @@ Plana. Las únicas sombras son la sombra suave bajo las fotos de la tira de cont
 - **Tira de contactos:** fotos con un marco blanco de estudio que cruzan del navy al blanco.
 - **Cinta:** el texto de la marca en cursiva negra, desplazándose hacia la derecha; se queda estática con reduced-motion.
 - **Lista de destacadas:** filas con el círculo de la destacada de Instagram, el nombre en cursiva y una nota en niebla.
+- **Vistas de compra:** pantalla completa con la foto sobre blanco de estudio a la izquierda y un panel navy con la esquina superior izquierda redondeada a la derecha (producto → carrito → métodos de pago → datos del método → hoja "Pedido en proceso"). CTA de compra: píldora mostaza a todo el ancho del panel.
+- **Chips de pago:** Pago Móvil morado, Binance negro con texto amarillo, Efectivo verde; texto, sin logos.
 - **Lista de canales:** filas a todo el ancho; al pasar el cursor el nombre se desplaza y se vuelve mostaza.
 
 ## Do's and Don'ts

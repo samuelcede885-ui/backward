@@ -3,49 +3,51 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>BACKWARD® — Inspired By Culture</title>
-  <meta name="description" content="BACKWARD®. Inspired By Culture. EST.23 — Art and aesthetics. Ropa desde Venezuela.">
+  <title>BACKWARD® Store</title>
+  <meta name="description" content="Tienda de BACKWARD®. Inspired By Culture. EST.23. Paga con Pago Móvil, Binance o efectivo.">
   <meta name="theme-color" content="#151f32">
   <link rel="preload" href="assets/fonts/archivo-italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <a class="skip" href="#drop">Saltar al contenido</a>
+  <a class="skip" href="#tienda">Saltar a la tienda</a>
 
   <header class="bar">
     <a class="bar__mark" href="#top" aria-label="BACKWARD, inicio">BACKWARD<sup>®</sup></a>
     <nav class="bar__nav" aria-label="Secciones">
-      <a href="#drop">Drop</a>
+      <a href="#tienda">Tienda</a>
       <a href="#culture">Culture</a>
       <a href="#contacto">Contacto</a>
     </nav>
-    <a class="patch patch--sm" href="https://ig.me/m/backward.ve">Escríbenos</a>
+    <a class="bag" href="#carrito" aria-label="Carrito, 0 productos" data-bag>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+      <span class="bag__count" data-bag-count>0</span>
+    </a>
   </header>
 
   <main id="top">
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero__inner">
-        <h1 id="hero-title" class="wordmark">BACKWARD<sup>®</sup></h1>
-        <div class="hero__row">
-          <p class="hero__lede">
-            <span>Inspired By Culture.</span>
-            <span class="hero__est">EST.23 — Art and aesthetics.</span>
-          </p>
-          <div class="hero__actions">
-            <a class="patch patch--gold" href="https://ig.me/m/backward.ve">
-              Pedir por DM
-              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"/></svg>
-            </a>
-            <a class="patch patch--ghost" href="https://beacons.ai/backward">WhatsApp</a>
-          </div>
+    <!-- Banner -->
+    <section class="banner" aria-labelledby="banner-title">
+      <div class="banner__copy">
+        <p class="banner__tag">Nuevo drop · EST.23</p>
+        <h1 id="banner-title" class="banner__title">Shop<br>the drop.</h1>
+        <p class="banner__lede">Denim ancho, tees y hoodies con el logo. Paga con Pago Móvil, Binance o efectivo y te lo llevamos.</p>
+        <div class="banner__actions">
+          <a class="patch patch--gold" href="#tienda">
+            Comprar ahora
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"/></svg>
+          </a>
+          <a class="patch patch--ghost" href="#culture">Ver la cultura</a>
         </div>
       </div>
 
-      <ul class="sheet" aria-label="Fotos del drop">
-        <li><img src="assets/img/drop-bolsillo.jpg" alt="Bolsillo trasero de un jean BACKWARD con parche de cuero, un teléfono con funda amarilla y unas gafas" width="548" height="632"></li>
-        <li><img src="assets/img/drop-amarillo.jpg" alt="Modelo con top blanco y jean, sosteniendo un teléfono con funda amarilla" width="548" height="632"></li>
-        <li><img src="assets/img/retrato-bn.jpg" alt="Retrato en blanco y negro, mirada a cámara bajo un brazo" width="472" height="324"></li>
-      </ul>
+      <div class="banner__art">
+        <figure class="print print--a"><img src="assets/img/drop-amarillo.jpg" alt="Modelo con top blanco y jean BACKWARD, sosteniendo un teléfono con funda amarilla" width="548" height="632"></figure>
+        <figure class="print print--b"><img src="assets/img/drop-bolsillo.jpg" alt="Parche de cuero BACKWARD en el bolsillo trasero de un jean" width="548" height="632"></figure>
+        <p class="stamp" aria-hidden="true"><span>Delivery</span><strong>Gratis</strong></p>
+      </div>
+
+      <p class="banner__mark" aria-hidden="true">BACKWARD<sup>®</sup></p>
     </section>
 
     <div class="tape" aria-hidden="true">
@@ -56,35 +58,18 @@
       </div>
     </div>
 
-    <section id="drop" class="drop" aria-labelledby="drop-title">
-      <header class="drop__head">
-        <h2 id="drop-title" class="display">El drop</h2>
-        <p>Denim ancho de lavado vintage, tees y hoodies con el logo. Tallas, precios y disponibilidad: por mensaje.</p>
+    <!-- Tienda -->
+    <section id="tienda" class="shop" aria-labelledby="shop-title">
+      <header class="shop__head">
+        <h2 id="shop-title" class="display">Tienda</h2>
+        <label class="search">
+          <span class="sr-only">Buscar productos</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+          <input id="search" type="search" placeholder="Buscar" autocomplete="off">
+        </label>
       </header>
-
-      <div class="drop__grid">
-        <figure class="look look--tall">
-          <img src="assets/img/drop-denim.jpg" alt="Jean ancho de lavado vintage, caído hasta los pies descalzos" width="548" height="632" loading="lazy">
-          <figcaption>Denim ancho · lavado vintage</figcaption>
-        </figure>
-        <figure class="look">
-          <img src="assets/img/drop-bolsillo.jpg" alt="Parche de cuero azul marino con el logo BACKWARD en la pretina del jean" width="548" height="632" loading="lazy">
-          <figcaption>Parche de cuero BACKWARD®</figcaption>
-        </figure>
-        <figure class="look look--wide">
-          <img src="assets/img/calle-tee.jpg" alt="Persona de espaldas en la calle con una tee negra con el logo BACKWARD estampado" width="548" height="324" loading="lazy">
-          <figcaption>Tee negra · logo gráfico</figcaption>
-        </figure>
-        <figure class="look look--wide">
-          <img src="assets/img/estudio-hoodie.jpg" alt="Modelo acostada sobre sábanas blancas con un hoodie gris" width="548" height="324" loading="lazy">
-          <figcaption>Hoodie gris</figcaption>
-        </figure>
-      </div>
-
-      <a class="patch patch--navy drop__cta" href="https://ig.me/m/backward.ve">
-        Preguntar por mi talla
-        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"/></svg>
-      </a>
+      <ul class="grid" data-grid></ul>
+      <p class="shop__empty" data-empty hidden>No encontramos nada con ese nombre. Prueba con "denim", "tee" o "hoodie".</p>
     </section>
 
     <section id="culture" class="culture" aria-labelledby="culture-title">
@@ -117,7 +102,7 @@
     </section>
 
     <section id="contacto" class="close" aria-labelledby="close-title">
-      <h2 id="close-title" class="close__title">¿Lo quieres?<br><em>Escríbenos.</em></h2>
+      <h2 id="close-title" class="close__title">¿Dudas con tu talla?<br><em>Escríbenos.</em></h2>
       <ul class="channels">
         <li><a href="https://ig.me/m/backward.ve"><span>Instagram</span><span>@backward.ve</span></a></li>
         <li><a href="https://beacons.ai/backward"><span>WhatsApp</span><span>beacons.ai/backward</span></a></li>
@@ -132,21 +117,118 @@
     <span>© Inspired By Culture. EST.23</span>
   </footer>
 
-  <script>
-    (() => {
-      const track = document.querySelector('[data-backward]');
-      if (!track || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      // The tape drifts left-to-right (against reading direction) and scrolling pushes it further back.
-      let drift = 0, last = performance.now();
-      const loop = () => track.scrollWidth / 3;
-      const frame = (now) => {
-        drift += (now - last) * 0.03; last = now;
-        const x = (drift + scrollY * 0.5) % loop();
-        track.style.transform = `translate3d(${x - loop()}px,0,0)`;
-        requestAnimationFrame(frame);
-      };
-      requestAnimationFrame(frame);
-    })();
-  </script>
+  <!-- Vistas de compra: se muestran según el #hash -->
+  <div class="screen" data-view="producto" hidden role="dialog" aria-modal="true" aria-label="Producto">
+    <div class="screen__media"><img data-p-img src="assets/img/drop-denim.jpg" alt=""></div>
+    <div class="panel">
+      <a class="back" href="#tienda" aria-label="Volver a la tienda"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg> Tienda</a>
+      <h2 class="panel__title"><span data-p-name></span><small data-p-model></small></h2>
+      <p class="price"><span data-p-price></span><span class="price__note" data-p-demo hidden>Precio de ejemplo</span></p>
+      <p class="pill"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17.5" cy="17.5" r="1.6"/></svg><span data-delivery-label>Delivery gratis</span></p>
+      <ul class="pays" aria-label="Métodos de pago">
+        <li class="pay pay--movil">Pago Móvil</li><li class="pay pay--binance">Binance</li><li class="pay pay--cash">Efectivo</li>
+      </ul>
+
+      <fieldset class="sizes">
+        <legend>Talla</legend>
+        <div class="sizes__row" data-p-sizes></div>
+      </fieldset>
+
+      <div class="qty-row">
+        <div class="stepper" data-p-stepper>
+          <button type="button" data-step="-1" aria-label="Quitar uno">−</button>
+          <output data-p-qty aria-live="polite">1</output>
+          <button type="button" data-step="1" aria-label="Agregar uno">+</button>
+        </div>
+        <div class="stock">
+          <p><span>Stock</span><span data-p-stock></span></p>
+          <div class="stock__bar"><i data-p-stockbar></i></div>
+        </div>
+      </div>
+
+      <h3 class="panel__sub">Descripción</h3>
+      <p class="panel__text" data-p-desc></p>
+      <p class="form-error" data-p-error hidden>Elige una talla para continuar.</p>
+      <button class="cta" type="button" data-add>Agregar al carrito</button>
+    </div>
+  </div>
+
+  <div class="screen screen--split" data-view="carrito" hidden role="dialog" aria-modal="true" aria-label="Carrito">
+    <div class="screen__side">
+      <a class="back back--dark" href="#tienda"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg> Seguir comprando</a>
+      <h2 class="label-pill">Carrito</h2>
+      <ul class="lines" data-lines></ul>
+      <p class="lines__empty" data-cart-empty hidden>Tu carrito está vacío. <a href="#tienda">Ir a la tienda</a></p>
+      <label class="label-pill" for="ubicacion">Ubicación</label>
+      <textarea id="ubicacion" class="address" rows="4" placeholder="Ciudad, urbanización, calle y un punto de referencia. Ej.: Caracas, Los Samanes…"></textarea>
+    </div>
+    <div class="panel">
+      <h2 class="panel__title panel__title--sm">Tu pedido</h2>
+      <ul class="mini" data-mini></ul>
+      <dl class="totals">
+        <div><dt>Productos</dt><dd data-t-sub></dd></div>
+        <div><dt>Delivery</dt><dd data-t-del></dd></div>
+        <div class="totals__total"><dt>Total</dt><dd data-t-total></dd></div>
+      </dl>
+      <p class="form-error" data-cart-error hidden></p>
+      <button class="cta" type="button" data-checkout>Pagar</button>
+    </div>
+  </div>
+
+  <div class="screen" data-view="pago" hidden role="dialog" aria-modal="true" aria-label="Métodos de pago">
+    <div class="screen__media screen__media--summary">
+      <ul class="mini mini--dark" data-mini></ul>
+      <p class="summary-total">Total <strong data-t-total></strong></p>
+    </div>
+    <div class="panel">
+      <a class="back" href="#carrito"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg> Carrito</a>
+      <h2 class="label-pill label-pill--light">Métodos de pago</h2>
+      <ul class="methods">
+        <li><a href="#pago-movil"><span class="pay pay--movil pay--lg">Pago Móvil</span><span class="methods__name">Pago Móvil</span><span class="methods__amt" data-amt-bs></span></a></li>
+        <li><a href="#binance"><span class="pay pay--binance pay--lg">Binance</span><span class="methods__name">Binance</span><span class="methods__amt" data-amt-usdt></span></a></li>
+        <li><a href="#efectivo"><span class="pay pay--cash pay--lg">Efectivo</span><span class="methods__name">Efectivo</span><span class="methods__amt" data-amt-usd></span></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="screen" data-view="metodo" hidden role="dialog" aria-modal="true" aria-label="Datos de pago">
+    <div class="screen__media screen__media--summary">
+      <ul class="mini mini--dark" data-mini></ul>
+      <p class="summary-total">Total <strong data-t-total></strong></p>
+    </div>
+    <div class="panel">
+      <a class="back" href="#pago"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg> Métodos de pago</a>
+      <p class="method-head" data-m-head></p>
+      <dl class="paydata" data-m-data></dl>
+      <p class="panel__text" data-m-note></p>
+      <button class="cta" type="button" data-send>
+        Enviar comprobante
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3 10 14M21 3l-7 18-4-7-7-4 18-7Z"/></svg>
+      </button>
+      <p class="panel__hint" data-send-hint></p>
+    </div>
+  </div>
+
+  <div class="sheet-wrap" data-view="pedido" hidden role="dialog" aria-modal="true" aria-labelledby="order-title">
+    <div class="order-sheet">
+      <span class="order-sheet__icon">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6 54 18v28L32 58 10 46V18L32 6Z"/><path d="M10 18l22 12 22-12M32 30v28M21 12l22 12v9"/></svg>
+      </span>
+      <h2 id="order-title">Pedido en proceso</h2>
+      <p class="order-sheet__id">Pedido <strong data-o-id></strong></p>
+      <ol class="track">
+        <li class="is-done">Comprobante enviado</li>
+        <li class="is-now">Verificando pago</li>
+        <li>Pedido enviado</li>
+      </ol>
+      <p class="panel__text">Te escribimos por el mismo chat cuando confirmemos el pago y tu pedido salga.</p>
+      <a class="cta cta--navy" href="#tienda" data-done>Volver a la tienda</a>
+    </div>
+  </div>
+
+  <div class="toast" data-toast role="status" aria-live="polite" hidden></div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
