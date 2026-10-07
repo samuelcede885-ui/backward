@@ -139,6 +139,7 @@ Plana. Las únicas sombras son la sombra suave bajo las fotos de la tira de cont
 - **Lista de destacadas:** filas con el círculo de la destacada de Instagram, el nombre en cursiva y una nota en niebla.
 - **Vistas de compra:** pantalla completa con la foto sobre blanco de estudio a la izquierda y un panel navy con la esquina superior izquierda redondeada a la derecha (producto → carrito → métodos de pago → datos del método → hoja "Pedido en proceso"). CTA de compra: píldora mostaza a todo el ancho del panel.
 - **Chips de pago:** Pago Móvil morado, Binance negro con texto amarillo, Efectivo verde; texto, sin logos.
+- **Esquema de tienda (referencia de app móvil):** header transparente sobre el banner con botones redondos (búsqueda) y píldora del carrito con contador; chips de color con miniatura; fila con tarjeta de título + productos en scroll horizontal; tarjeta destacada grande; catálogo en tarjetas blancas (radio 18px, sombra suave). Producto sobre blanco con carrusel (flechas redondas, fotos fantasma a los lados en móvil, puntos), etiqueta, nombre + precio en una fila, selector de talla en píldora gris + "Agregar al carrito" en píldora navy. Carrito y pago como filas blancas con miniatura y stepper, y barra inferior fija con subtotal + píldora navy.
 - **Lista de canales:** filas a todo el ancho; al pasar el cursor el nombre se desplaza y se vuelve mostaza.
 
 ## Do's and Don'ts
