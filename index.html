@@ -9,179 +9,198 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Quicksand:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Bodoni+Moda:ital,opsz,wght@1,6..96,700;1,6..96,800&family=Poppins:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: una sola columna editorial de 1120px; cada sección alterna texto y una lámina animada (molécula, ruta, cerebro, sinapsis, osciloscopio). */
+/* Layout: collage editorial sobre papel. Una columna de 1120px; títulos como recortes azul marino, láminas pegadas con cinta, semitonos y anotaciones de resonancia. Un solo look claro, a propósito. */
 :root{
-  --bg:#fdf6fa;        /* blanco rubor */
-  --surface:#ffffff;
-  --surface-2:#fbeef5;
-  --line:#efd9e8;
-  --fg:#4a3354;        /* ciruela suave para el texto */
-  --muted:#86708f;
-  --gaba:#a58ad8;      /* lavanda: GABA */
-  --gaba-strong:#7454b3;
-  --glu:#e88bb1;       /* rosado: glutamato */
-  --cl:#6fa9d4;        /* azul pastel: cloruro */
-  --warn:#d99a55;
-  --danger:#cf4f78;
-  --font-script:"Great Vibes", "Snell Roundhand", "Brush Script MT", cursive;
-  --font-display:"Cormorant Garamond", "Garamond", Georgia, serif;
-  --font-body:"Quicksand", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --bg:#ebe4d8;         /* papel */
+  --surface:#f8f3ea;    /* hoja recortada */
+  --surface-2:#f0e8db;
+  --line:#cdbfa9;
+  --fg:#1f3556;         /* tinta azul marino */
+  --ink:#1f3556;
+  --cream:#fbf6ec;
+  --muted:#5c6880;
+  --gaba:#e27fa6;       /* rosa: GABA */
+  --gaba-strong:#bf4f7c;
+  --glu:#cf8746;        /* kraft anaranjado: glutamato */
+  --cl:#3b8a95;         /* verde azulado: cloruro */
+  --warn:#b4874c;
+  --danger:#bb4256;
+  --kraft:#c8ad8a;
+  --star:#c46a6e;
+  --font-script:"Great Vibes", "Snell Roundhand", cursive;
+  --font-display:"Poppins", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-serif:"Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --font-body:"Poppins", "Avenir Next", "Segoe UI", system-ui, sans-serif;
   --font-mono:"DM Mono", ui-monospace, Menlo, monospace;
+  color-scheme:light;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#231a2b; --surface:#2d2237; --surface-2:#362a42; --line:#4b3a5a;
-    --fg:#f7ecf5; --muted:#c6afcb; --gaba:#c9b3f5; --gaba-strong:#e2d4ff;
-    --glu:#f5a8c8; --cl:#9fd0ec; --warn:#f0c48f; --danger:#f58aa8;
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#231a2b; --surface:#2d2237; --surface-2:#362a42; --line:#4b3a5a;
-  --fg:#f7ecf5; --muted:#c6afcb; --gaba:#c9b3f5; --gaba-strong:#e2d4ff;
-  --glu:#f5a8c8; --cl:#9fd0ec; --warn:#f0c48f; --danger:#f58aa8;
-  color-scheme:dark;
-}
-
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:17px;line-height:1.65;font-weight:500}
+body{
+  color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.7;
+  background-color:var(--bg);
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .32  0 0 0 0 .27  0 0 0 0 .2  0 0 0 .32 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+    radial-gradient(circle, transparent 40px, rgba(31,53,86,.035) 41px 56px, transparent 57px);
+  background-size:240px 240px, 150px 150px;
+}
 .wrap{max-width:1120px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
-h1,h2,h3{font-family:var(--font-display);line-height:1.1;text-wrap:balance;margin:0}
-h1{font-family:var(--font-script);font-size:clamp(3.4rem,9vw,6.4rem);font-weight:400;line-height:1;color:var(--gaba-strong)}
-h2{font-size:clamp(2.1rem,4.6vw,3.3rem);font-weight:600;font-style:italic;letter-spacing:-.005em}
-h2 .script{font-family:var(--font-script);font-style:normal;font-weight:400;color:var(--glu);font-size:1.25em;line-height:.8}
-h3{font-size:1.4rem;font-weight:700}
+h1,h2,h3{font-family:var(--font-display);line-height:1.05;text-wrap:balance;margin:0}
+h3{font-size:1.15rem;font-weight:800;letter-spacing:-.01em}
 p{margin:0;max-width:65ch}
 a{color:var(--gaba-strong)}
-a:focus-visible,button:focus-visible,input:focus-visible,.region:focus-visible{outline:2px solid var(--gaba);outline-offset:3px}
-.eyebrow{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gaba)}
+a:focus-visible,button:focus-visible,input:focus-visible,.region:focus-visible{outline:3px solid var(--gaba);outline-offset:3px}
+.eyebrow{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .mono{font-family:var(--font-mono)}
 .muted{color:var(--muted)}
-em.gaba{font-style:normal;color:var(--gaba-strong);font-weight:700}
 
-/* nav */
-.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-block:18px;border-bottom:1px solid var(--line)}
-.brand{font-family:var(--font-script);font-weight:400;font-size:2rem;color:var(--gaba-strong);display:flex;align-items:center;gap:10px}
-.brand svg{width:26px;height:26px}
-.top nav{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:.92rem}
-.top nav a{color:var(--muted);text-decoration:none}
-.top nav a:hover{color:var(--fg)}
+/* títulos recortados */
+.cut{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:0;padding-top:.55em}
+.cut .ln{display:block;background:var(--ink);color:var(--cream);font-weight:800;text-transform:uppercase;letter-spacing:-.02em;padding:.08em .28em .02em;line-height:1;margin-top:-.04em;clip-path:polygon(0 4%,3% 0,100% 2%,99% 96%,96% 100%,1% 98%)}
+.cut .ln:nth-child(odd){margin-left:.6em}
+.cut .pk{color:var(--gaba)}
+.cut .scr{position:absolute;left:-.3em;top:-.2em;z-index:1;font-family:var(--font-script);font-weight:400;text-transform:none;color:var(--gaba);font-size:1.5em;line-height:1;letter-spacing:0;transform:rotate(-6deg);text-shadow:-2px -2px 0 var(--cream),2px 2px 0 var(--ink)}
+h2.cut{font-size:clamp(1.9rem,4.6vw,3.1rem)}
+h1.cut{font-size:clamp(2.6rem,7.4vw,5rem)}
+.pill{display:inline-block;background:var(--cl);color:var(--cream);border-radius:16px;padding:8px 18px;font-size:1.05rem;line-height:1.25;box-shadow:3px 3px 0 var(--ink)}
+.pill b{font-weight:800}
 
-section{padding-block:72px;border-bottom:1px solid var(--line)}
-.section-head{display:grid;gap:14px;margin-bottom:36px}
+/* cabecera */
+.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-block:18px}
+.brand{font-family:var(--font-display);font-weight:800;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.brand svg{width:30px;height:30px}
+.top nav{display:flex;flex-wrap:wrap;gap:6px}
+.top nav a{color:var(--ink);text-decoration:none;font-size:.82rem;font-weight:600;border:1.5px solid var(--ink);border-radius:999px;padding:3px 12px;background:var(--cream)}
+.top nav a:hover{background:var(--gaba);color:var(--ink)}
+
+section{padding-block:72px}
+.section-head{display:grid;gap:18px;margin-bottom:40px}
 
 /* hero */
-.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding-block:56px 64px}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center;padding-block:40px 64px}
 .hero > *{min-width:0}
-.hero h1 .greek{color:var(--glu)}
-.hero .lede{font-size:1.2rem;margin-top:22px}
-.mol-box{position:relative;background:radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--gaba) 18%, transparent), transparent 65%);border-radius:50%;aspect-ratio:1/1;max-width:100%}
-#mol{width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+.hero .lede{font-size:1.05rem;margin-top:22px}
+.hero-art{position:relative}
+.mol-box{position:relative;aspect-ratio:1/1;max-width:100%}
+.mol-box .star{position:absolute;width:34%;left:-4%;top:2%;transform-origin:center;animation:spin 30s linear infinite}
+.mol-box .scribble{position:absolute;right:-2%;bottom:6%;width:42%}
+.scribble path{fill:none;stroke:var(--ink);stroke-width:1.4;stroke-dasharray:900;stroke-dashoffset:900;animation:draw 7s ease-in-out infinite alternate}
+@keyframes draw{to{stroke-dashoffset:0}}
+.mri{position:absolute;font-family:var(--font-mono);font-size:.68rem;line-height:1.35;color:var(--ink);opacity:.75;white-space:pre;pointer-events:none}
+.mri.tl{left:0;top:0}.mri.br{right:0;bottom:44px;text-align:right}
+#mol{position:relative;width:100%;height:100%;display:block;cursor:grab;touch-action:none;filter:drop-shadow(0 0 2px var(--cream)) drop-shadow(0 0 2px var(--cream)) drop-shadow(0 0 1px #e9d9a8)}
 #mol:active{cursor:grabbing}
-.mol-caption{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;font-family:var(--font-mono);font-size:.8rem;color:var(--muted);margin-top:8px;text-align:center}
+.mol-caption{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;font-family:var(--font-mono);font-size:.75rem;color:var(--ink);margin-top:6px;text-align:center}
 .legend-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.dots{display:inline-flex;gap:6px;align-items:center;border:2px solid var(--ink);border-radius:999px;padding:5px 10px;margin-top:26px}
+.dots i{width:8px;height:8px;border-radius:50%;background:var(--ink)}
+.dots i:first-child{background:var(--gaba)}
 
-.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:8px}
-.fact{background:var(--surface);padding:18px 20px;display:grid;gap:4px;align-content:start}
-.fact b{font-family:var(--font-display);font-size:2.2rem;font-weight:700;color:var(--gaba-strong);font-variant-numeric:tabular-nums;line-height:1.1}
-.fact span{font-size:.9rem;color:var(--muted)}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:28px}
+.fact{background:var(--cream);padding:14px 16px;display:grid;gap:2px;align-content:start;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.fact:nth-child(2){background:var(--gaba);transform:rotate(1deg)}
+.fact:nth-child(3){transform:rotate(-1deg)}
+.fact b{font-family:var(--font-serif);font-style:italic;font-size:2rem;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1.1}
+.fact span{font-size:.85rem;color:var(--ink)}
 
-/* plates */
-.plate{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px}
+/* láminas con cinta */
+.plate{position:relative;background:var(--surface);border:1px solid var(--line);padding:22px;box-shadow:0 1px 0 var(--line),0 12px 24px -18px rgba(31,53,86,.5)}
+.plate::before{content:"";position:absolute;top:-12px;left:50%;width:110px;height:24px;transform:translateX(-50%) rotate(-3deg);background:rgba(200,173,138,.6);mix-blend-mode:multiply}
 .plate-scroll{overflow-x:auto}
 .plate-title{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:baseline;margin-bottom:12px}
-.plate-title .mono{font-size:.78rem;color:var(--muted)}
+.plate-title .mono{font-size:.72rem;color:var(--muted)}
 
 /* síntesis */
 .shunt-svg{width:100%;min-width:720px;height:auto;display:block}
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:28px}
-.step{display:grid;gap:8px;align-content:start;padding-top:14px;border-top:2px solid var(--gaba)}
-.step .n{font-family:var(--font-mono);font-size:.8rem;color:var(--gaba)}
-.step p{font-size:.95rem}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:32px}
+.step{display:grid;gap:8px;align-content:start}
+.step .n{font-family:var(--font-serif);font-style:italic;font-weight:800;font-size:2.4rem;line-height:1;color:var(--gaba)}
+.step p{font-size:.92rem}
 svg text{font-family:var(--font-body)}
-.node rect{fill:var(--surface-2);stroke:var(--line);stroke-width:1.5}
-.node text{fill:var(--fg);font-size:15px;font-weight:700;text-anchor:middle;dominant-baseline:middle}
-.node.key rect{fill:color-mix(in srgb,var(--gaba) 22%,var(--surface));stroke:var(--gaba);stroke-width:2}
-.node.glu rect{stroke:var(--glu)}
-.enz rect{fill:var(--bg);stroke:var(--gaba);stroke-width:1.2}
-.enz text{fill:var(--gaba-strong);font-family:var(--font-mono);font-size:12px;font-weight:600;text-anchor:middle;dominant-baseline:middle}
-.flow{fill:none;stroke:var(--muted);stroke-width:2;stroke-dasharray:6 7;animation:dash 1.2s linear infinite}
-.flow.shunt{stroke:var(--gaba)}
-.note{fill:var(--muted);font-size:12px;text-anchor:middle}
-.krebs-ring{fill:none;stroke:var(--glu);stroke-width:3;stroke-dasharray:14 10;transform-box:fill-box;transform-origin:center;animation:spin 14s linear infinite}
+.node rect{fill:var(--ink)}
+.node text{fill:var(--cream);font-size:14px;font-weight:700;text-anchor:middle;dominant-baseline:middle}
+.node.key rect{fill:var(--gaba);stroke:var(--ink);stroke-width:2.5}
+.node.key text{fill:var(--ink)}
+.node.glu rect{fill:#2c4a73}
+.enz rect{fill:var(--cl)}
+.enz text{fill:var(--cream);font-family:var(--font-mono);font-size:12px;font-weight:500;text-anchor:middle;dominant-baseline:middle}
+.flow{fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:6 7;animation:dash 1.2s linear infinite}
+.flow.shunt{stroke:var(--gaba-strong);stroke-width:2.5}
+.note{fill:var(--muted);font-size:12px;text-anchor:middle;font-family:var(--font-mono)}
+.krebs-ring{fill:none;stroke:var(--star);stroke-width:3;stroke-dasharray:14 10;transform-box:fill-box;transform-origin:center;animation:spin 14s linear infinite}
 @keyframes dash{to{stroke-dashoffset:-26}}
 @keyframes spin{to{transform:rotate(360deg)}}
 .co2{animation:rise 3s ease-in infinite}
 @keyframes rise{0%{transform:translate(0,0);opacity:0}15%{opacity:1}100%{transform:translate(18px,-48px);opacity:0}}
 
 /* cerebro */
-.brain-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:24px;align-items:start}
+.brain-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:28px;align-items:start}
 .brain-grid > *{min-width:0}
 .brain-svg{width:100%;height:auto;display:block}
-.brain-outline{fill:color-mix(in srgb,var(--gaba) 8%,var(--surface-2));stroke:var(--gaba);stroke-width:2.5}
-.cortex-glow{fill:none;stroke:var(--gaba);stroke-width:7;opacity:.25;animation:breathe 4s ease-in-out infinite}
-.gyrus{fill:none;stroke:var(--line);stroke-width:2.2;stroke-linecap:round}
-.cereb{fill:color-mix(in srgb,var(--gaba) 10%,var(--surface-2));stroke:var(--gaba);stroke-width:2}
-.stem{fill:var(--surface-2);stroke:var(--line);stroke-width:2}
-@keyframes breathe{50%{opacity:.6}}
+.brain-outline{fill:url(#ht-pink);stroke:var(--ink);stroke-width:3}
+.cortex-glow{fill:none;stroke:var(--cream);stroke-width:12;opacity:.9}
+.gyrus{fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round}
+.cereb{fill:url(#ht-ink);stroke:var(--ink);stroke-width:2.5}
+.stem{fill:url(#ht-pink);stroke:var(--ink);stroke-width:2.5}
 .region{cursor:pointer}
-.region .core{fill:var(--gaba)}
-.region .halo{fill:var(--gaba);opacity:.35;transform-box:fill-box;transform-origin:center;animation:halo 2.6s ease-out infinite}
-.region .ring{fill:none;stroke:var(--gaba);stroke-width:2;transform-box:fill-box;transform-origin:center;animation:ripple 2.6s ease-out infinite}
-.region text{fill:var(--fg);font-size:14px;font-weight:700;paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}
+.region .core{fill:var(--ink)}
+.region .halo{fill:var(--gaba);opacity:.5;transform-box:fill-box;transform-origin:center;animation:halo 2.6s ease-out infinite}
+.region .ring{fill:none;stroke:var(--ink);stroke-width:2;transform-box:fill-box;transform-origin:center;animation:ripple 2.6s ease-out infinite}
+.region text{fill:var(--ink);font-size:14px;font-weight:800;paint-order:stroke;stroke:var(--cream);stroke-width:5px;stroke-linejoin:round}
 .region.on .core{fill:var(--gaba-strong)}
 .region.on text{fill:var(--gaba-strong)}
-@keyframes halo{0%{transform:scale(.6);opacity:.5}100%{transform:scale(1.6);opacity:0}}
+@keyframes halo{0%{transform:scale(.6);opacity:.6}100%{transform:scale(1.7);opacity:0}}
 @keyframes ripple{0%{transform:scale(.4);opacity:.9}100%{transform:scale(2.2);opacity:0}}
-.spark{fill:var(--gaba-strong)}
+.spark{fill:var(--cream);stroke:var(--ink);stroke-width:1.5}
 .region-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
-.chip{font:inherit;font-size:.88rem;border:1px solid var(--line);background:var(--surface-2);color:var(--fg);border-radius:999px;padding:6px 14px;cursor:pointer}
-.chip[aria-pressed="true"]{background:var(--gaba-strong);color:var(--surface);border-color:var(--gaba-strong)}
+.chip{font:inherit;font-size:.85rem;font-weight:600;border:2px solid var(--ink);background:var(--cream);color:var(--ink);border-radius:999px;padding:5px 14px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--gaba)}
 .region-card{display:grid;gap:10px}
-.region-card h3{font-size:1.5rem}
-.periphery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
-.peri{display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:start;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.region-card h3{font-family:var(--font-serif);font-style:italic;font-size:2rem;font-weight:800}
+.periphery{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:36px}
+.peri{display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:start;padding:16px;background:var(--cream);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.peri:nth-child(2){transform:rotate(-1deg)}
 .peri > div{min-width:0}
 .peri svg{width:64px;height:64px}
-.peri p{font-size:.92rem}
+.peri p{font-size:.88rem}
 
 /* sinapsis */
-.syn-grid{display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start}
+.syn-grid{display:grid;grid-template-columns:1fr 300px;gap:28px;align-items:start}
 .syn-grid > *{min-width:0}
-#syn{width:100%;aspect-ratio:800/520;display:block;border-radius:12px;background:var(--bg)}
+#syn{width:100%;aspect-ratio:800/520;display:block;background:var(--bg)}
 .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
-.btn{font:inherit;font-weight:700;font-size:.92rem;border-radius:10px;padding:9px 16px;cursor:pointer;border:1px solid var(--gaba);background:var(--gaba-strong);color:var(--surface)}
-.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
-.toggle{display:flex;align-items:center;gap:8px;font-size:.92rem;color:var(--muted)}
-.toggle input{accent-color:var(--gaba);width:18px;height:18px}
-.caption{margin-top:14px;padding:12px 16px;border-left:3px solid var(--cl);background:var(--surface-2);border-radius:0 10px 10px 0;font-size:.98rem;min-height:3.4em}
-.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.85rem;color:var(--muted);margin-top:12px}
+.btn{font:inherit;font-weight:700;font-size:.88rem;border-radius:999px;padding:8px 18px;cursor:pointer;border:2px solid var(--ink);background:var(--ink);color:var(--cream);box-shadow:3px 3px 0 var(--gaba)}
+.btn.ghost{background:var(--cream);color:var(--ink);box-shadow:none}
+.toggle{display:flex;align-items:center;gap:8px;font-size:.88rem;color:var(--ink)}
+.toggle input{accent-color:var(--gaba-strong);width:18px;height:18px}
+.caption{margin-top:14px;padding:12px 16px;background:var(--ink);color:var(--cream);font-size:.95rem;min-height:3.4em;clip-path:polygon(0 0,100% 3%,99% 100%,1% 96%)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.8rem;color:var(--muted);margin-top:12px;font-family:var(--font-mono)}
 .receptor-card{display:grid;gap:12px}
 .receptor-card svg{width:100%;max-width:260px;height:auto;margin:0 auto;display:block}
-.sub{stroke:var(--surface);stroke-width:3}
+.sub{stroke:var(--ink);stroke-width:2.5}
 .sub.a{fill:var(--gaba)}
-.sub.b{fill:color-mix(in srgb,var(--gaba) 55%,var(--glu))}
+.sub.b{fill:var(--cream)}
 .sub.g{fill:var(--cl)}
-.sub-label{fill:var(--bg);font-family:var(--font-mono);font-size:13px;font-weight:600;text-anchor:middle;dominant-baseline:middle}
+.sub-label{fill:var(--ink);font-family:var(--font-serif);font-style:italic;font-size:20px;font-weight:800;text-anchor:middle;dominant-baseline:middle}
 .pore-ion{fill:var(--cl)}
 .timeline{display:grid;gap:0;margin:0;padding:0;list-style:none;counter-reset:t}
-.timeline li{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:12px 0;border-top:1px solid var(--line);font-size:.95rem}
-.timeline li::before{counter-increment:t;content:counter(t);font-family:var(--font-mono);font-weight:600;color:var(--gaba);font-size:.9rem;padding-top:2px}
-.timeline li.active::before{color:var(--cl)}
-.timeline li.active{color:var(--fg)}
-.timeline li{color:var(--muted)}
-.mini-steps{margin-top:28px}
+.timeline li{display:grid;grid-template-columns:40px 1fr;gap:12px;padding:12px 0;border-top:1.5px dashed var(--line);font-size:.92rem;color:var(--muted)}
+.timeline li::before{counter-increment:t;content:counter(t);font-family:var(--font-serif);font-style:italic;font-weight:800;font-size:1.6rem;line-height:1;color:var(--line)}
+.timeline li.active{color:var(--ink)}
+.timeline li.active::before{color:var(--gaba-strong)}
+.mini-steps{margin-top:36px}
 
-/* acciones */
-.actions{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
-.action{display:grid;gap:10px;align-content:start;padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+/* acciones: stickers */
+.actions{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.action{display:grid;gap:10px;align-content:start;padding:18px;background:var(--cream);border:2px solid var(--ink);border-radius:18px;box-shadow:5px 5px 0 var(--ink)}
+.action:nth-child(even){transform:rotate(1.2deg);background:#f6dbe4}
+.action:nth-child(3){transform:rotate(-1deg)}
 .action svg{width:72px;height:72px}
-.action p{font-size:.92rem}
-.ic-stroke{fill:none;stroke:var(--gaba);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.action p{font-size:.86rem}
+.ic-stroke{fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .ic-fill{fill:var(--gaba)}
-.ic-glu{fill:none;stroke:var(--glu);stroke-width:3;stroke-linecap:round}
+.ic-glu{fill:none;stroke:var(--gaba-strong);stroke-width:3;stroke-linecap:round}
 .damp{animation:damp 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
 @keyframes damp{0%,100%{transform:scaleY(1)}55%{transform:scaleY(.2)}}
 .breath{animation:breathc 5s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
@@ -190,59 +209,59 @@ svg text{font-family:var(--font-body)}
 @keyframes look{0%,100%{transform:translateX(0)}30%{transform:translateX(-7px)}65%{transform:translateX(7px)}}
 .blink{animation:blink 4s infinite;transform-box:fill-box;transform-origin:center}
 @keyframes blink{0%,46%,54%,100%{transform:scaleY(1)}50%{transform:scaleY(.1)}}
-.net-node{fill:var(--gaba);animation:node 2.4s ease-in-out infinite}
+.net-node{fill:var(--gaba);stroke:var(--ink);stroke-width:1.5;animation:node 2.4s ease-in-out infinite}
 .net-node:nth-child(2){animation-delay:.4s}.net-node:nth-child(3){animation-delay:.8s}.net-node:nth-child(4){animation-delay:1.2s}.net-node:nth-child(5){animation-delay:1.6s}
 @keyframes node{50%{fill:var(--cl)}}
-.limb{animation:limb 2.4s ease-in-out infinite;transform-origin:36px 30px}
-@keyframes limb{50%{transform:rotate(-24deg)}}
 
 /* equilibrio */
-.bal-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.bal-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
 .bal-grid > *{min-width:0}
-#scope{width:100%;aspect-ratio:16/8;display:block;border-radius:12px;background:var(--bg)}
+#scope{width:100%;aspect-ratio:16/8;display:block;background:var(--bg)}
 .slider-row{display:grid;gap:8px;margin-top:16px}
-.slider-row input{width:100%;accent-color:var(--gaba)}
-.scale-labels{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:.78rem;color:var(--muted)}
-.state{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:.82rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 12px;border-radius:999px;border:1px solid currentColor}
-.state.low{color:var(--glu)}
-.state.ok{color:var(--cl)}
-.state.high{color:var(--gaba)}
-.cons{display:grid;gap:12px;margin:16px 0 0;padding:0;list-style:none}
-.cons li{display:grid;gap:2px;padding:12px 14px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line)}
-.cons li b{font-family:var(--font-display);font-size:1.05rem}
-.cons li span{font-size:.93rem;color:var(--muted)}
-.warnbox{margin-top:32px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;padding:18px 20px;border:1px solid var(--danger);border-radius:14px;background:color-mix(in srgb,var(--danger) 9%,var(--surface))}
+.slider-row input{width:100%;accent-color:var(--gaba-strong)}
+.scale-labels{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:.75rem;color:var(--muted)}
+.state{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-display);font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:5px 14px;border-radius:999px;color:var(--cream)}
+.state.low{background:var(--glu)}
+.state.ok{background:var(--cl)}
+.state.high{background:var(--gaba-strong)}
+.cons{display:grid;gap:10px;margin:16px 0 0;padding:0;list-style:none}
+.cons li{display:grid;gap:2px;padding:10px 0;border-top:1.5px dashed var(--line)}
+.cons li b{font-weight:800;font-size:1rem}
+.cons li span{font-size:.88rem;color:var(--muted)}
+.warnbox{margin-top:36px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;padding:20px 22px;background:var(--ink);color:var(--cream);clip-path:polygon(0 2%,100% 0,99% 98%,1% 100%)}
 .warnbox > div{min-width:0}
-.warnbox svg{width:40px;height:40px}
-.warnbox h3{color:var(--danger);margin-bottom:6px}
+.warnbox svg{width:44px;height:44px}
+.warnbox h3{color:var(--gaba);margin-bottom:6px}
 
 /* fuentes */
-.sources{display:grid;gap:10px;margin:0;padding:0;list-style:none}
-.sources li{display:grid;grid-template-columns:1fr;gap:2px;padding:12px 0;border-top:1px solid var(--line)}
-.sources a{word-break:break-word}
-footer{padding-block:32px 48px;font-size:.88rem;color:var(--muted)}
+.sources{display:grid;gap:0;margin:0;padding:0;list-style:none}
+.sources li{display:grid;gap:2px;padding:14px 0;border-top:1.5px dashed var(--line)}
+.sources a{word-break:break-word;font-weight:700;color:var(--ink)}
+footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;padding-block:32px 48px;font-size:.78rem;color:var(--ink);text-transform:uppercase;letter-spacing:.04em}
+footer b{font-weight:800}
 
 @media (max-width:900px){
   .hero,.brain-grid,.syn-grid,.bal-grid{grid-template-columns:1fr}
-  .mol-box{max-width:420px;margin:0 auto;width:100%}
+  .hero-art{max-width:460px;margin:0 auto;width:100%}
   .actions{grid-template-columns:repeat(2,1fr)}
   .steps,.periphery{grid-template-columns:repeat(2,1fr)}
-  .facts{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:520px){
   .steps,.periphery,.actions{grid-template-columns:1fr}
   section{padding-block:52px}
+  .mri{display:none}
 }
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
+  .scribble path{stroke-dashoffset:0}
 }
 </style>
 
 <div class="wrap">
   <header class="top">
     <div class="brand">
-      <svg viewBox="0 0 26 26" aria-hidden="true"><circle cx="5" cy="17" r="4" fill="var(--gaba)"/><circle cx="13" cy="9" r="4" fill="var(--muted)"/><circle cx="21" cy="17" r="4" fill="var(--glu)"/><path d="M5 17 13 9 21 17" stroke="var(--fg)" stroke-width="1.6" fill="none"/></svg>
-      GABA
+      <svg viewBox="0 0 30 30" aria-hidden="true"><path d="M15 1l3 8 8-3-4 8 7 4-8 2 2 9-8-5-5 7-1-9-8 1 5-7L1 12l8-1L8 3l7 5z" fill="var(--gaba)" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round"/></svg>
+      GABA · Neurociencia
     </div>
     <nav aria-label="Secciones">
       <a href="#sintesis">Síntesis</a>
@@ -257,37 +276,55 @@ footer{padding-block:32px 48px;font-size:.88rem;color:var(--muted)}
   <!-- HERO -->
   <div class="hero">
     <div>
-      <p class="eyebrow">Neurotransmisor inhibidor · SNC</p>
-      <h1>Ácido <span class="greek">γ</span>‑amino&shy;butírico</h1>
+      <p class="eyebrow">Ácido γ‑aminobutírico · neurotransmisor inhibidor del SNC</p>
+      <h1 class="cut" style="margin-top:18px"><span class="scr">el</span><span class="ln">GABA,</span><span class="ln pk">el freno</span><span class="ln">del cerebro</span></h1>
+      <p class="pill" style="margin-top:22px">Descubre cómo calma <b>tu sistema nervioso.</b></p>
       <p class="lede">El GABA es el principal neurotransmisor inhibidor del Sistema Nervioso Central. Su trabajo es frenar: reduce y modula la actividad de las neuronas para que no se sobreexciten y el cerebro funcione de forma ordenada.</p>
-      <div class="facts" style="margin-top:28px">
+      <div class="facts">
         <div class="fact"><b>30–40 %</b><span>de las sinapsis del cerebro humano usan GABA</span></div>
-        <div class="fact"><b class="mono" style="font-size:1.45rem">C₄H₉NO₂</b><span>fórmula · 103,12 g/mol</span></div>
+        <div class="fact"><b>C₄H₉NO₂</b><span>fórmula · 103,12 g/mol</span></div>
         <div class="fact"><b>1949</b><span>se descubrió primero en la papa</span></div>
-        <div class="fact"><b class="mono" style="font-size:1.45rem">−70→−75</b><span>mV: hiperpolariza la neurona</span></div>
+        <div class="fact"><b>−75 mV</b><span>hiperpolariza la neurona desde −70 mV</span></div>
       </div>
     </div>
-    <div>
+    <div class="hero-art">
       <div class="mol-box">
-        <canvas id="mol" role="img" aria-label="Modelo 3D animado de la molécula de GABA: un grupo amino, tres carbonos metileno y un grupo carboxilo"></canvas>
+        <svg class="star" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 0l9 30 29-12-17 27 29 9-30 8 14 28-27-16-7 26-8-27-27 16 14-28L0 53l29-9-17-27 29 12z" fill="var(--star)"/><rect x="0" y="0" width="100" height="100" fill="url(#ht-cream)" opacity=".35"/></svg>
+        <span class="mri tl" aria-hidden="true">GABA  Ex: 1949
+Se: 4C  In: γ
+Mw  103.12 g/mol</span>
+        <span class="mri br" aria-hidden="true">pKa 4.23 / 10.43
+FSE  TR:4500
+SNC  30–40 % syn</span>
+        <canvas id="mol" role="img" aria-label="Modelo 3D animado en semitono de la molécula de GABA: un grupo amino, tres carbonos metileno y un grupo carboxilo"></canvas>
+        <svg class="scribble" viewBox="0 0 200 120" aria-hidden="true"><path d="M10 60c20-40 60-50 70-20s-30 40-20 10 50-40 60-10-20 40-10 20 40-30 50-5 0 30 20 10 15-20 10-15"/></svg>
       </div>
       <div class="mol-caption">
-        <span><i class="legend-dot" style="background:#6f8cff"></i>N amino</span>
-        <span><i class="legend-dot" style="background:#7d8399"></i>C</span>
-        <span><i class="legend-dot" style="background:#ff5c5c"></i>O carboxilo</span>
-        <span><i class="legend-dot" style="background:#e9ecf5;border:1px solid var(--muted)"></i>H</span>
-        <span>Arrastra para girar</span>
+        <span><i class="legend-dot" style="background:var(--cl)"></i>N amino</span>
+        <span><i class="legend-dot" style="background:var(--ink)"></i>C</span>
+        <span><i class="legend-dot" style="background:var(--gaba)"></i>O carboxilo</span>
+        <span><i class="legend-dot" style="background:var(--cream);border:1px solid var(--ink)"></i>H</span>
+        <span>· arrastra para girar</span>
       </div>
+      <div style="text-align:center"><span class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
     </div>
   </div>
 </div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <pattern id="ht-pink" width="7" height="7" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="#f3d3df"/><circle cx="3.5" cy="3.5" r="1.9" fill="#d9799f"/></pattern>
+    <pattern id="ht-ink" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#f8f3ea"/><circle cx="3" cy="3" r="2.1" fill="#1f3556"/></pattern>
+    <pattern id="ht-cream" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="1.2" fill="#fbf6ec"/></pattern>
+  </defs>
+</svg>
 
 <!-- SÍNTESIS -->
 <section id="sintesis">
   <div class="wrap">
     <div class="section-head">
-      <p class="eyebrow">01 · Cómo se produce</p>
-      <h2>La derivación del <span class="script">GABA</span> <span class="muted" style="font-weight:600">(GABA shunt)</span></h2>
+      <p class="eyebrow">Se: 01 · Im: síntesis</p>
+      <h2 class="cut"><span class="scr">la</span><span class="ln">derivación</span><span class="ln pk">del GABA</span></h2>
+      <p><span class="pill">GABA shunt</span></p>
       <p>El organismo fabrica y conserva sus niveles de GABA mediante una ruta metabólica que sale del ciclo de Krebs y vuelve a él. La animación sigue el recorrido de una molécula desde la glucosa hasta el GABA y de regreso.</p>
     </div>
 
@@ -372,8 +409,8 @@ footer{padding-block:32px 48px;font-size:.88rem;color:var(--muted)}
 <section id="ubicacion">
   <div class="wrap">
     <div class="section-head">
-      <p class="eyebrow">02 · Dónde se encuentra</p>
-      <h2>Un freno repartido por todo el <span class="script">encéfalo</span></h2>
+      <p class="eyebrow">Se: 02 · Im: ubicación</p>
+      <h2 class="cut"><span class="scr">un</span><span class="ln">freno en todo</span><span class="ln pk">el encéfalo</span></h2>
       <p>Las neuronas GABAérgicas están en todo el encéfalo, aunque su densidad cambia mucho de una región a otra. Cada punto que late marca una población abundante. Toca una región para ver qué hace allí el GABA.</p>
     </div>
 
@@ -453,8 +490,8 @@ footer{padding-block:32px 48px;font-size:.88rem;color:var(--muted)}
 <section id="sinapsis">
   <div class="wrap">
     <div class="section-head">
-      <p class="eyebrow">03 · Cómo se mueve en el SNC</p>
-      <h2>El viaje del GABA a través de la <span class="script">sinapsis</span></h2>
+      <p class="eyebrow">Se: 03 · Im: movilidad en el SNC</p>
+      <h2 class="cut"><span class="scr">el</span><span class="ln">viaje del GABA</span><span class="ln pk">por la sinapsis</span></h2>
       <p>Esta simulación muestra una sinapsis GABAérgica en tiempo real. Cada punto violeta es una molécula de GABA; los puntos verdes son iones cloruro (Cl⁻). Observa cómo la entrada de cloruro baja el potencial de la neurona receptora en el osciloscopio inferior.</p>
     </div>
 
@@ -511,8 +548,8 @@ footer{padding-block:32px 48px;font-size:.88rem;color:var(--muted)}
 <section id="acciones">
   <div class="wrap">
     <div class="section-head">
-      <p class="eyebrow">04 · Qué hace</p>
-      <h2>Acciones del <span class="script">GABA</span></h2>
+      <p class="eyebrow">Se: 04 · Im: funciones</p>
+      <h2 class="cut"><span class="scr">sus</span><span class="ln">acciones</span><span class="ln pk">en el SNC</span></h2>
     </div>
     <div class="actions">
       <div class="action">
@@ -548,8 +585,9 @@ footer{padding-block:32px 48px;font-size:.88rem;color:var(--muted)}
 <section id="equilibrio">
   <div class="wrap">
     <div class="section-head">
-      <p class="eyebrow">05 · Consecuencias del desequilibrio</p>
-      <h2>Ni sin freno, ni con el freno de <span class="script">mano</span> puesto</h2>
+      <p class="eyebrow">Se: 05 · Im: desequilibrio</p>
+      <h2 class="cut"><span class="scr">¿y si</span><span class="ln">falta o sobra</span><span class="ln pk">GABA?</span></h2>
+      <p><span class="pill">Ni sin freno, <b>ni con el freno de mano puesto.</b></span></p>
       <p>Mueve el control para cambiar el nivel de actividad GABAérgica y mira cómo responde una neurona en el osciloscopio. Con poco GABA dispara sin control; con demasiado, casi se apaga.</p>
     </div>
 
@@ -585,7 +623,7 @@ footer{padding-block:32px 48px;font-size:.88rem;color:var(--muted)}
 <!-- FUENTES -->
 <section id="fuentes" style="border-bottom:0">
   <div class="wrap">
-    <div class="section-head"><p class="eyebrow">Referencias</p><h2><span class="script">Fuentes</span></h2></div>
+    <div class="section-head"><p class="eyebrow">Referencias</p><h2 class="cut"><span class="scr">las</span><span class="ln pk">fuentes</span></h2></div>
     <ul class="sources">
       <li><a href="https://www.ncbi.nlm.nih.gov/books/NBK27979/" target="_blank" rel="noopener">NCBI Bookshelf · Basic Neurochemistry: GABA</a><span class="muted">Síntesis, derivación del GABA y la enzima GAD como marcador.</span></li>
       <li><a href="https://psicologiaymente.com/neurociencias/gaba-neurotransmisor" target="_blank" rel="noopener">Psicología y Mente · GABA (neurotransmisor)</a><span class="muted">Acciones y consecuencias de la actividad GABAérgica.</span></li>
@@ -595,7 +633,7 @@ footer{padding-block:32px 48px;font-size:.88rem;color:var(--muted)}
   </div>
 </section>
 
-<div class="wrap"><footer>Página con fines educativos. No sustituye la consulta con un profesional de la salud.</footer></div>
+<div class="wrap"><footer><span><b>GABA |</b><br>Neurotransmisor inhibidor del SNC</span><span style="max-width:40ch;text-align:right">Página con fines educativos.<br>No sustituye la consulta con un profesional de la salud.</span></footer></div>
 
 <script>
 (function(){
@@ -603,7 +641,7 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 let C = {};
 function readColors(){
   const s = getComputedStyle(document.documentElement);
-  ['bg','surface','surface-2','line','fg','muted','gaba','gaba-strong','glu','cl','warn','danger'].forEach(k=>C[k]=s.getPropertyValue('--'+k).trim());
+  ['bg','surface','surface-2','line','fg','muted','gaba','gaba-strong','glu','cl','warn','danger','ink','cream','kraft'].forEach(k=>C[k]=s.getPropertyValue('--'+k).trim());
 }
 readColors();
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', readColors);
@@ -644,7 +682,8 @@ const atoms = [
   {e:'H', p:[ 0.6,-1.05, 0.9]},{e:'H', p:[ 0.6,-1.05,-0.9]},
 ];
 const bonds = [[0,1],[1,2],[2,3],[3,4],[4,5,2],[4,6],[6,7],[0,8],[0,9],[1,10],[1,11],[2,12],[2,13],[3,14],[3,15]];
-const EL = {N:{c:'#6f8cff',r:.42},C:{c:'#7d8399',r:.44},O:{c:'#ff5c5c',r:.42},H:{c:'#e9ecf5',r:.24}};
+const EL = {N:{k:'cl',r:.42},C:{k:'ink',r:.44},O:{k:'gaba',r:.42},H:{k:'cream',r:.26}};
+const off=document.createElement('canvas');off.width=off.height=500;const octx=off.getContext('2d',{willReadFrequently:true});
 let ay=0.6, ax=0.35, drag=null, molVel=0.006;
 mol.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY};mol.setPointerCapture(e.pointerId)});
 mol.addEventListener('pointermove',e=>{if(!drag)return;ay+=(e.clientX-drag.x)*0.01;ax+=(e.clientY-drag.y)*0.01;ax=Math.max(-1.3,Math.min(1.3,ax));drag={x:e.clientX,y:e.clientY};drawMol()});
@@ -653,6 +692,7 @@ mol.addEventListener('pointercancel',()=>drag=null);
 function drawMol(t){
   const ctx = fitCanvas(mol, 500, 500);
   ctx.clearRect(-500,-500,1500,1500);
+  const o=octx; o.clearRect(0,0,500,500);
   const ca=Math.cos(ay), sa=Math.sin(ay), cb=Math.cos(ax), sb=Math.sin(ax);
   const bob = t? Math.sin(t/900)*0.12 : 0;
   const P = atoms.map(a=>{
@@ -663,32 +703,36 @@ function drawMol(t){
     const f = 7/(7-z2), S=56;
     return {x:250+x1*S*f, y:250-y1*S*f, z:z2, f};
   });
-  // enlaces
   bonds.forEach(b=>{
     const A=P[b[0]],B=P[b[1]];
-    ctx.strokeStyle = C.muted; ctx.lineWidth = 7*(A.f+B.f)/2; ctx.lineCap='round';
+    o.strokeStyle = C.ink; o.lineCap='round';
     if(b[2]){
       const dx=B.x-A.x, dy=B.y-A.y, L=Math.hypot(dx,dy)||1, ox=-dy/L*6, oy=dx/L*6;
-      ctx.lineWidth=4.5;
-      [[ox,oy],[-ox,-oy]].forEach(([u,v])=>{ctx.beginPath();ctx.moveTo(A.x+u,A.y+v);ctx.lineTo(B.x+u,B.y+v);ctx.stroke()});
-    } else {ctx.beginPath();ctx.moveTo(A.x,A.y);ctx.lineTo(B.x,B.y);ctx.stroke();}
+      o.lineWidth=5;
+      [[ox,oy],[-ox,-oy]].forEach(([u,v])=>{o.beginPath();o.moveTo(A.x+u,A.y+v);o.lineTo(B.x+u,B.y+v);o.stroke()});
+    } else {o.lineWidth=8*(A.f+B.f)/2;o.beginPath();o.moveTo(A.x,A.y);o.lineTo(B.x,B.y);o.stroke();}
   });
   const order = P.map((p,i)=>i).sort((i,j)=>P[i].z-P[j].z);
   order.forEach(i=>{
-    const a=atoms[i], p=P[i], el=EL[a.e], r=el.r*56*p.f;
-    const g=ctx.createRadialGradient(p.x-r*.35,p.y-r*.35,r*.1,p.x,p.y,r);
-    g.addColorStop(0,'#ffffff'); g.addColorStop(.25,el.c); g.addColorStop(1,shade(el.c));
-    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(p.x,p.y,r,0,Math.PI*2); ctx.fill();
-    ctx.strokeStyle=hexA(C.bg,.5)||'#0008'; ctx.lineWidth=1.2; ctx.stroke();
-    if(a.e!=='H'){
-      ctx.fillStyle = a.e==='C' ? '#ffffff' : '#ffffff';
-      ctx.font = `700 ${Math.round(r*.8)}px "DM Mono", monospace`;
-      ctx.textAlign='center'; ctx.textBaseline='middle';
-      ctx.fillText(a.g||a.e, p.x, p.y+1);
-    }
+    const a=atoms[i], p=P[i], el=EL[a.e], r=el.r*56*p.f, col=C[el.k];
+    const g=o.createRadialGradient(p.x-r*.4,p.y-r*.4,r*.05,p.x,p.y,r);
+    g.addColorStop(0,'#ffffff'); g.addColorStop(.35,col); g.addColorStop(1,shade(col));
+    o.fillStyle=g; o.beginPath(); o.arc(p.x,p.y,r,0,Math.PI*2); o.fill();
+    o.strokeStyle=C.ink; o.lineWidth=a.e==='H'?3:2; o.stroke();
   });
-  ctx.font='600 15px "DM Mono", monospace'; ctx.fillStyle=C.muted; ctx.textAlign='center';
-  ctx.fillText('H₂N–CH₂–CH₂–CH₂–COOH', 250, 470);
+  // trama de semitono
+  const st=6, img=o.getImageData(0,0,500,500).data;
+  for(let y=st/2;y<500;y+=st){for(let x=st/2;x<500;x+=st){
+    const k=((y|0)*500+(x|0))*4, al=img[k+3]; if(al<60)continue;
+    const R=img[k],G=img[k+1],B=img[k+2], Lm=(.3*R+.59*G+.11*B)/255;
+    const rad=Math.min(st*.62, st*.5*(.5+.9*(1-Lm)));
+    ctx.fillStyle=`rgb(${R},${G},${B})`; ctx.beginPath(); ctx.arc(x,y,rad,0,Math.PI*2); ctx.fill();
+  }}
+  order.forEach(i=>{const a=atoms[i];if(a.e==='H')return;const p=P[i],r=EL[a.e].r*56*p.f;
+    ctx.font=`italic 800 ${Math.round(r*.95)}px "Bodoni Moda", Georgia, serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.lineWidth=4;ctx.strokeStyle=C.ink;ctx.strokeText(a.g||a.e,p.x,p.y+1);ctx.fillStyle=C.cream;ctx.fillText(a.g||a.e,p.x,p.y+1)});
+  ctx.font='500 15px "DM Mono", monospace'; ctx.fillStyle=C.ink; ctx.textAlign='center';
+  ctx.fillText('H₂N–CH₂–CH₂–CH₂–COOH', 250, 478);
 }
 function shade(hex){const n=parseInt(hex.slice(1),16);const k=.45;return `rgb(${(n>>16&255)*k|0},${(n>>8&255)*k|0},${(n&255)*k|0})`}
 
@@ -825,11 +869,11 @@ function drawSyn(t){
   gaba.forEach(p=>{ctx.fillStyle=p.state==='bound'?C['gaba-strong']:C.gaba;ctx.beginPath();ctx.arc(p.x,p.y,3.6,0,Math.PI*2);ctx.fill()});
   uptakes.forEach(u=>{const k=(t-u.t0)/900;ctx.globalAlpha=1-k;ctx.fillStyle=u.astro?C.warn:C.gaba;ctx.beginPath();ctx.arc(u.x+(u.tx-u.x)*k,u.y+(u.ty-u.y)*k,3.4,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1});
   // etiquetas
-  ctx.font='700 14px Quicksand, sans-serif';ctx.textAlign='left';ctx.fillStyle=C.fg;
+  ctx.font='700 14px Poppins, sans-serif';ctx.textAlign='left';ctx.fillStyle=C.fg;
   ctx.fillText('Neurona presináptica (GABAérgica)',165,92+0);
-  ctx.fillStyle=C.muted;ctx.font='13px Quicksand, sans-serif';
+  ctx.fillStyle=C.muted;ctx.font='13px Poppins, sans-serif';
   ctx.fillText('Hendidura sináptica · ~20 nm',20,246);
-  ctx.fillStyle=C.fg;ctx.font='700 14px Quicksand, sans-serif';
+  ctx.fillStyle=C.fg;ctx.font='700 14px Poppins, sans-serif';
   ctx.fillText('Neurona postsináptica',120,322);
   ctx.textAlign='right';ctx.fillText('Astrocito',790,140);
   ctx.textAlign='left';ctx.font='600 11px "DM Mono", monospace';ctx.fillStyle=C.muted;
