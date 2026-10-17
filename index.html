@@ -255,6 +255,21 @@ footer b{font-weight:800}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .scribble path{stroke-dashoffset:0}
 }
+
+/* créditos */
+.credits{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:stretch}
+.credits > *{min-width:0}
+.names{display:flex;flex-wrap:wrap;gap:12px;margin:0;padding:0;list-style:none}
+.names li{background:var(--cream);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:10px 16px;font-weight:800;font-size:1.02rem}
+.names li:nth-child(even){background:#f6dbe4;transform:rotate(1deg)}
+.names li:nth-child(3){transform:rotate(-1.2deg)}
+.uni{display:grid;justify-items:center;align-content:center;gap:14px;text-align:center;background:var(--ink);color:var(--cream);padding:28px 22px;clip-path:polygon(0 2%,100% 0,99% 98%,1% 100%)}
+.uni .logo-slot{width:132px;height:132px;display:grid;place-items:center;background:var(--cream);border-radius:50%;overflow:hidden}
+.uni .logo-slot img{width:88%;height:88%;object-fit:contain}
+.uni .logo-slot span{font-family:var(--font-display);font-weight:800;font-size:2rem;color:var(--ink);letter-spacing:-.02em}
+.uni p{font-size:.85rem;color:var(--cream);opacity:.85}
+.uni b{font-family:var(--font-serif);font-style:italic;font-size:1.5rem;line-height:1.15;color:var(--gaba)}
+@media (max-width:900px){.credits{grid-template-columns:1fr}}
 </style>
 
 <div class="wrap">
@@ -270,6 +285,7 @@ footer b{font-weight:800}
       <a href="#acciones">Acciones</a>
       <a href="#equilibrio">Desequilibrio</a>
       <a href="#fuentes">Fuentes</a>
+      <a href="#creditos">Autoras</a>
     </nav>
   </header>
 
@@ -630,6 +646,33 @@ SNC  30–40 % syn</span>
       <li><a href="https://www.cun.es/diccionario-medico/terminos/acido-gammaaminobutirico" target="_blank" rel="noopener">Clínica Universidad de Navarra · Ácido gamma‑aminobutírico</a><span class="muted">Distribución en el encéfalo, páncreas y descubrimiento en la papa.</span></li>
       <li><a href="https://mhanational.org/es/resources/what-is-gaba/" target="_blank" rel="noopener">Mental Health America · ¿Qué es el GABA?</a><span class="muted">Consecuencias del déficit y del exceso de GABA.</span></li>
     </ul>
+  </div>
+</section>
+
+<!-- CRÉDITOS -->
+<section id="creditos" style="padding-top:24px">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Se: 06 · Im: autoras</p>
+      <h2 class="cut"><span class="scr">por</span><span class="ln">el equipo</span><span class="ln pk">del proyecto</span></h2>
+    </div>
+    <div class="credits">
+      <div class="plate">
+        <p class="eyebrow" style="margin-bottom:16px">Elaborado por</p>
+        <ul class="names">
+          <li>Michelle Tohme</li>
+          <li>Isabela Pino</li>
+          <li>Valeria Castro</li>
+          <li>Nathalia Cedeño</li>
+          <li>Maria Tahhan</li>
+        </ul>
+      </div>
+      <div class="uni">
+        <div class="logo-slot" id="uni-logo"><span>UNIMET</span></div>
+        <b>Universidad Metropolitana</b>
+        <p>Caracas, Venezuela</p>
+      </div>
+    </div>
   </div>
 </section>
 
