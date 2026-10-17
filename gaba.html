@@ -2,49 +2,50 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Quicksand:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: una sola columna editorial de 1120px; cada sección alterna texto y una lámina animada (molécula, ruta, cerebro, sinapsis, osciloscopio). */
 :root{
-  --bg:#0e1124;        /* noche índigo: fondo del tejido */
-  --surface:#161a33;   /* láminas */
-  --surface-2:#1d2242;
-  --line:#2c3360;
-  --fg:#e9ebf7;
-  --muted:#9ea4c7;
-  --gaba:#9fa9ff;      /* GABA: inhibición, periwinkle */
-  --gaba-strong:#c3c9ff;
-  --glu:#ff8f70;       /* glutamato: excitación, coral */
-  --cl:#6fe0bf;        /* ion cloruro */
-  --warn:#ffcf6b;
-  --danger:#ff7a8a;
-  --font-display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
-  --font-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
-  --font-mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  color-scheme:dark;
+  --bg:#fdf6fa;        /* blanco rubor */
+  --surface:#ffffff;
+  --surface-2:#fbeef5;
+  --line:#efd9e8;
+  --fg:#4a3354;        /* ciruela suave para el texto */
+  --muted:#86708f;
+  --gaba:#a58ad8;      /* lavanda: GABA */
+  --gaba-strong:#7454b3;
+  --glu:#e88bb1;       /* rosado: glutamato */
+  --cl:#6fa9d4;        /* azul pastel: cloruro */
+  --warn:#d99a55;
+  --danger:#cf4f78;
+  --font-script:"Great Vibes", "Snell Roundhand", "Brush Script MT", cursive;
+  --font-display:"Cormorant Garamond", "Garamond", Georgia, serif;
+  --font-body:"Quicksand", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-mono:"DM Mono", ui-monospace, Menlo, monospace;
 }
-@media (prefers-color-scheme: light){
-  :root:not([data-theme="dark"]){
-    --bg:#eef0f8; --surface:#ffffff; --surface-2:#f4f5fb; --line:#d3d7ea;
-    --fg:#151933; --muted:#555c80; --gaba:#4a55d6; --gaba-strong:#2f38a8;
-    --glu:#cf4f2f; --cl:#0f8a69; --warn:#9a6a00; --danger:#c22d45;
-    color-scheme:light;
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#231a2b; --surface:#2d2237; --surface-2:#362a42; --line:#4b3a5a;
+    --fg:#f7ecf5; --muted:#c6afcb; --gaba:#c9b3f5; --gaba-strong:#e2d4ff;
+    --glu:#f5a8c8; --cl:#9fd0ec; --warn:#f0c48f; --danger:#f58aa8;
+    color-scheme:dark;
   }
 }
-:root[data-theme="light"]{
-  --bg:#eef0f8; --surface:#ffffff; --surface-2:#f4f5fb; --line:#d3d7ea;
-  --fg:#151933; --muted:#555c80; --gaba:#4a55d6; --gaba-strong:#2f38a8;
-  --glu:#cf4f2f; --cl:#0f8a69; --warn:#9a6a00; --danger:#c22d45;
-  color-scheme:light;
+:root[data-theme="dark"]{
+  --bg:#231a2b; --surface:#2d2237; --surface-2:#362a42; --line:#4b3a5a;
+  --fg:#f7ecf5; --muted:#c6afcb; --gaba:#c9b3f5; --gaba-strong:#e2d4ff;
+  --glu:#f5a8c8; --cl:#9fd0ec; --warn:#f0c48f; --danger:#f58aa8;
+  color-scheme:dark;
 }
 
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:17px;line-height:1.6}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:17px;line-height:1.65;font-weight:500}
 .wrap{max-width:1120px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
 h1,h2,h3{font-family:var(--font-display);line-height:1.1;text-wrap:balance;margin:0}
-h1{font-size:clamp(2.6rem,7vw,5.2rem);font-weight:800;letter-spacing:-.02em}
-h2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-.01em}
-h3{font-size:1.2rem;font-weight:600}
+h1{font-family:var(--font-script);font-size:clamp(3.4rem,9vw,6.4rem);font-weight:400;line-height:1;color:var(--gaba-strong)}
+h2{font-size:clamp(2.1rem,4.6vw,3.3rem);font-weight:600;font-style:italic;letter-spacing:-.005em}
+h2 .script{font-family:var(--font-script);font-style:normal;font-weight:400;color:var(--glu);font-size:1.25em;line-height:.8}
+h3{font-size:1.4rem;font-weight:700}
 p{margin:0;max-width:65ch}
 a{color:var(--gaba-strong)}
 a:focus-visible,button:focus-visible,input:focus-visible,.region:focus-visible{outline:2px solid var(--gaba);outline-offset:3px}
@@ -55,7 +56,7 @@ em.gaba{font-style:normal;color:var(--gaba-strong);font-weight:700}
 
 /* nav */
 .top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-block:18px;border-bottom:1px solid var(--line)}
-.brand{font-family:var(--font-display);font-weight:800;font-size:1.15rem;letter-spacing:.02em;display:flex;align-items:center;gap:10px}
+.brand{font-family:var(--font-script);font-weight:400;font-size:2rem;color:var(--gaba-strong);display:flex;align-items:center;gap:10px}
 .brand svg{width:26px;height:26px}
 .top nav{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:.92rem}
 .top nav a{color:var(--muted);text-decoration:none}
@@ -67,7 +68,7 @@ section{padding-block:72px;border-bottom:1px solid var(--line)}
 /* hero */
 .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding-block:56px 64px}
 .hero > *{min-width:0}
-.hero h1 .greek{color:var(--gaba)}
+.hero h1 .greek{color:var(--glu)}
 .hero .lede{font-size:1.2rem;margin-top:22px}
 .mol-box{position:relative;background:radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--gaba) 18%, transparent), transparent 65%);border-radius:50%;aspect-ratio:1/1;max-width:100%}
 #mol{width:100%;height:100%;display:block;cursor:grab;touch-action:none}
@@ -77,7 +78,7 @@ section{padding-block:72px;border-bottom:1px solid var(--line)}
 
 .facts{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:8px}
 .fact{background:var(--surface);padding:18px 20px;display:grid;gap:4px;align-content:start}
-.fact b{font-family:var(--font-display);font-size:1.9rem;font-weight:800;color:var(--gaba-strong);font-variant-numeric:tabular-nums;line-height:1.1}
+.fact b{font-family:var(--font-display);font-size:2.2rem;font-weight:700;color:var(--gaba-strong);font-variant-numeric:tabular-nums;line-height:1.1}
 .fact span{font-size:.9rem;color:var(--muted)}
 
 /* plates */
@@ -130,7 +131,7 @@ svg text{font-family:var(--font-body)}
 .spark{fill:var(--gaba-strong)}
 .region-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
 .chip{font:inherit;font-size:.88rem;border:1px solid var(--line);background:var(--surface-2);color:var(--fg);border-radius:999px;padding:6px 14px;cursor:pointer}
-.chip[aria-pressed="true"]{background:var(--gaba);color:var(--bg);border-color:var(--gaba)}
+.chip[aria-pressed="true"]{background:var(--gaba-strong);color:var(--surface);border-color:var(--gaba-strong)}
 .region-card{display:grid;gap:10px}
 .region-card h3{font-size:1.5rem}
 .periphery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
@@ -144,7 +145,7 @@ svg text{font-family:var(--font-body)}
 .syn-grid > *{min-width:0}
 #syn{width:100%;aspect-ratio:800/520;display:block;border-radius:12px;background:var(--bg)}
 .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
-.btn{font:inherit;font-weight:700;font-size:.92rem;border-radius:10px;padding:9px 16px;cursor:pointer;border:1px solid var(--gaba);background:var(--gaba);color:var(--bg)}
+.btn{font:inherit;font-weight:700;font-size:.92rem;border-radius:10px;padding:9px 16px;cursor:pointer;border:1px solid var(--gaba);background:var(--gaba-strong);color:var(--surface)}
 .btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
 .toggle{display:flex;align-items:center;gap:8px;font-size:.92rem;color:var(--muted)}
 .toggle input{accent-color:var(--gaba);width:18px;height:18px}
@@ -279,7 +280,7 @@ footer{padding-block:32px 48px;font-size:.88rem;color:var(--muted)}
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">01 · Cómo se produce</p>
-      <h2>La derivación del GABA <span class="muted" style="font-weight:600">(GABA shunt)</span></h2>
+      <h2>La derivación del <span class="script">GABA</span> <span class="muted" style="font-weight:600">(GABA shunt)</span></h2>
       <p>El organismo fabrica y conserva sus niveles de GABA mediante una ruta metabólica que sale del ciclo de Krebs y vuelve a él. La animación sigue el recorrido de una molécula desde la glucosa hasta el GABA y de regreso.</p>
     </div>
 
@@ -302,8 +303,8 @@ footer{padding-block:32px 48px;font-size:.88rem;color:var(--muted)}
           <!-- Krebs -->
           <circle cx="290" cy="250" r="80" fill="color-mix(in srgb,var(--glu) 8%,transparent)"/>
           <circle class="krebs-ring" cx="290" cy="250" r="80"/>
-          <text x="290" y="244" text-anchor="middle" style="fill:var(--fg);font-family:var(--font-display);font-weight:800;font-size:18px">Ciclo de</text>
-          <text x="290" y="266" text-anchor="middle" style="fill:var(--fg);font-family:var(--font-display);font-weight:800;font-size:18px">Krebs</text>
+          <text x="290" y="244" text-anchor="middle" style="fill:var(--fg);font-family:var(--font-display);font-weight:700;font-size:21px">Ciclo de</text>
+          <text x="290" y="266" text-anchor="middle" style="fill:var(--fg);font-family:var(--font-display);font-weight:700;font-size:21px">Krebs</text>
           <text x="290" y="288" text-anchor="middle" class="note">mitocondria</text>
 
           <!-- derivación -->
@@ -329,7 +330,7 @@ footer{padding-block:32px 48px;font-size:.88rem;color:var(--muted)}
           <g class="node"><rect x="220" y="38" width="140" height="44" rx="10"/><text x="290" y="61">Piruvato</text></g>
           <g class="node glu"><rect x="420" y="88" width="165" height="44" rx="10"/><text x="502" y="111">α‑cetoglutarato</text></g>
           <g class="node glu"><rect x="610" y="88" width="145" height="44" rx="10"/><text x="682" y="111">L‑glutamato</text></g>
-          <g class="node key"><rect x="790" y="86" width="140" height="48" rx="10"/><text x="860" y="111" style="font-size:18px;font-family:var(--font-display)">GABA</text></g>
+          <g class="node key"><rect x="790" y="86" width="140" height="48" rx="10"/><text x="860" y="111" style="font-size:24px;font-family:var(--font-display);font-style:italic">GABA</text></g>
           <g class="node"><rect x="770" y="288" width="180" height="44" rx="10"/><text x="860" y="311" style="font-size:13.5px">Semialdehído succínico</text></g>
           <g class="node"><rect x="530" y="288" width="140" height="44" rx="10"/><text x="600" y="311">Succinato</text></g>
 
@@ -365,7 +366,7 @@ footer{padding-block:32px 48px;font-size:.88rem;color:var(--muted)}
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">02 · Dónde se encuentra</p>
-      <h2>Un freno repartido por todo el encéfalo</h2>
+      <h2>Un freno repartido por todo el <span class="script">encéfalo</span></h2>
       <p>Las neuronas GABAérgicas están en todo el encéfalo, aunque su densidad cambia mucho de una región a otra. Cada punto que late marca una población abundante. Toca una región para ver qué hace allí el GABA.</p>
     </div>
 
@@ -446,7 +447,7 @@ footer{padding-block:32px 48px;font-size:.88rem;color:var(--muted)}
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">03 · Cómo se mueve en el SNC</p>
-      <h2>El viaje del GABA a través de la sinapsis</h2>
+      <h2>El viaje del GABA a través de la <span class="script">sinapsis</span></h2>
       <p>Esta simulación muestra una sinapsis GABAérgica en tiempo real. Cada punto violeta es una molécula de GABA; los puntos verdes son iones cloruro (Cl⁻). Observa cómo la entrada de cloruro baja el potencial de la neurona receptora en el osciloscopio inferior.</p>
     </div>
 
@@ -504,7 +505,7 @@ footer{padding-block:32px 48px;font-size:.88rem;color:var(--muted)}
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">04 · Qué hace</p>
-      <h2>Acciones del GABA</h2>
+      <h2>Acciones del <span class="script">GABA</span></h2>
     </div>
     <div class="actions">
       <div class="action">
@@ -541,7 +542,7 @@ footer{padding-block:32px 48px;font-size:.88rem;color:var(--muted)}
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow">05 · Consecuencias del desequilibrio</p>
-      <h2>Ni sin freno, ni con el freno de mano puesto</h2>
+      <h2>Ni sin freno, ni con el freno de <span class="script">mano</span> puesto</h2>
       <p>Mueve el control para cambiar el nivel de actividad GABAérgica y mira cómo responde una neurona en el osciloscopio. Con poco GABA dispara sin control; con demasiado, casi se apaga.</p>
     </div>
 
@@ -577,7 +578,7 @@ footer{padding-block:32px 48px;font-size:.88rem;color:var(--muted)}
 <!-- FUENTES -->
 <section id="fuentes" style="border-bottom:0">
   <div class="wrap">
-    <div class="section-head"><p class="eyebrow">Referencias</p><h2>Fuentes</h2></div>
+    <div class="section-head"><p class="eyebrow">Referencias</p><h2><span class="script">Fuentes</span></h2></div>
     <ul class="sources">
       <li><a href="https://www.ncbi.nlm.nih.gov/books/NBK27979/" target="_blank" rel="noopener">NCBI Bookshelf · Basic Neurochemistry: GABA</a><span class="muted">Síntesis, derivación del GABA y la enzima GAD como marcador.</span></li>
       <li><a href="https://psicologiaymente.com/neurociencias/gaba-neurotransmisor" target="_blank" rel="noopener">Psicología y Mente · GABA (neurotransmisor)</a><span class="muted">Acciones y consecuencias de la actividad GABAérgica.</span></li>
@@ -674,12 +675,12 @@ function drawMol(t){
     ctx.strokeStyle=hexA(C.bg,.5)||'#0008'; ctx.lineWidth=1.2; ctx.stroke();
     if(a.e!=='H'){
       ctx.fillStyle = a.e==='C' ? '#ffffff' : '#ffffff';
-      ctx.font = `700 ${Math.round(r*.8)}px "JetBrains Mono", monospace`;
+      ctx.font = `700 ${Math.round(r*.8)}px "DM Mono", monospace`;
       ctx.textAlign='center'; ctx.textBaseline='middle';
       ctx.fillText(a.g||a.e, p.x, p.y+1);
     }
   });
-  ctx.font='600 15px "JetBrains Mono", monospace'; ctx.fillStyle=C.muted; ctx.textAlign='center';
+  ctx.font='600 15px "DM Mono", monospace'; ctx.fillStyle=C.muted; ctx.textAlign='center';
   ctx.fillText('H₂N–CH₂–CH₂–CH₂–COOH', 250, 470);
 }
 function shade(hex){const n=parseInt(hex.slice(1),16);const k=.45;return `rgb(${(n>>16&255)*k|0},${(n>>8&255)*k|0},${(n&255)*k|0})`}
@@ -817,14 +818,14 @@ function drawSyn(t){
   gaba.forEach(p=>{ctx.fillStyle=p.state==='bound'?C['gaba-strong']:C.gaba;ctx.beginPath();ctx.arc(p.x,p.y,3.6,0,Math.PI*2);ctx.fill()});
   uptakes.forEach(u=>{const k=(t-u.t0)/900;ctx.globalAlpha=1-k;ctx.fillStyle=u.astro?C.warn:C.gaba;ctx.beginPath();ctx.arc(u.x+(u.tx-u.x)*k,u.y+(u.ty-u.y)*k,3.4,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1});
   // etiquetas
-  ctx.font='700 14px "Atkinson Hyperlegible", sans-serif';ctx.textAlign='left';ctx.fillStyle=C.fg;
+  ctx.font='700 14px Quicksand, sans-serif';ctx.textAlign='left';ctx.fillStyle=C.fg;
   ctx.fillText('Neurona presináptica (GABAérgica)',165,92+0);
-  ctx.fillStyle=C.muted;ctx.font='13px "Atkinson Hyperlegible", sans-serif';
+  ctx.fillStyle=C.muted;ctx.font='13px Quicksand, sans-serif';
   ctx.fillText('Hendidura sináptica · ~20 nm',20,246);
-  ctx.fillStyle=C.fg;ctx.font='700 14px "Atkinson Hyperlegible", sans-serif';
+  ctx.fillStyle=C.fg;ctx.font='700 14px Quicksand, sans-serif';
   ctx.fillText('Neurona postsináptica',120,322);
   ctx.textAlign='right';ctx.fillText('Astrocito',790,140);
-  ctx.textAlign='left';ctx.font='600 11px "JetBrains Mono", monospace';ctx.fillStyle=C.muted;
+  ctx.textAlign='left';ctx.font='600 11px "DM Mono", monospace';ctx.fillStyle=C.muted;
   ctx.fillText('GABA-A',receptors[0].x-22,receptors[0].y+28);
   ctx.fillText('GAT-1',transporters[0].x-20,transporters[0].y-14);
   ctx.fillText('GAT-3',682,232);
@@ -837,9 +838,9 @@ function drawSyn(t){
   ctx.setLineDash([4,5]);ctx.strokeStyle=C.line;ctx.beginPath();ctx.moveTo(ox+8,vy(-70));ctx.lineTo(ox+ow-8,vy(-70));ctx.stroke();ctx.setLineDash([]);
   ctx.strokeStyle=C.cl;ctx.lineWidth=2.4;ctx.beginPath();
   hist.forEach((v,i)=>{const x=ox+8+i*(ow-16)/260;i?ctx.lineTo(x,vy(v)):ctx.moveTo(x,vy(v))});ctx.stroke();
-  ctx.font='600 11px "JetBrains Mono", monospace';ctx.fillStyle=C.muted;ctx.textAlign='left';
+  ctx.font='600 11px "DM Mono", monospace';ctx.fillStyle=C.muted;ctx.textAlign='left';
   ctx.fillText('Potencial postsináptico',ox+10,oy+16);ctx.fillText('−70 mV',ox+10,vy(-70)-5);
-  ctx.textAlign='right';ctx.fillStyle=C.cl;ctx.font='700 14px "JetBrains Mono", monospace';
+  ctx.textAlign='right';ctx.fillStyle=C.cl;ctx.font='700 14px "DM Mono", monospace';
   ctx.fillText(V.toFixed(1).replace('-','−')+' mV',ox+ow-12,oy+18);
   if(phase!==lastPhaseShown){lastPhaseShown=phase;capEl.textContent=CAPS[phase];phaseLis.forEach(li=>li.classList.toggle('active',+li.dataset.p===phase))}
 }
@@ -913,7 +914,7 @@ function drawScope(){
   const L=64,R=SW-14,T=16,B=SH-24;
   const y=v=>T+(40-v)/(40-(-90))*(B-T);
   ctx.strokeStyle=C.line;ctx.lineWidth=1;
-  ctx.font='600 11px "JetBrains Mono", monospace';ctx.fillStyle=C.muted;ctx.textAlign='right';ctx.textBaseline='middle';
+  ctx.font='600 11px "DM Mono", monospace';ctx.fillStyle=C.muted;ctx.textAlign='right';ctx.textBaseline='middle';
   [30,0,-55,-70,-85].forEach(v=>{ctx.setLineDash(v===-55?[5,5]:[]);ctx.strokeStyle=v===-55?hexA(C.glu,.7):C.line;ctx.beginPath();ctx.moveTo(L,y(v));ctx.lineTo(R,y(v));ctx.stroke();ctx.fillStyle=v===-55?C.glu:C.muted;ctx.fillText((v>0?'+':'')+String(v).replace('-','−'),L-8,y(v))});
   ctx.setLineDash([]);
   ctx.textAlign='left';ctx.fillStyle=C.glu;ctx.fillText('umbral',L+6,y(-55)-9);
