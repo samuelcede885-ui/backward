@@ -1,0 +1,950 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body style="margin:0">
+<title>GABA, el freno del cerebro</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: una sola columna editorial de 1120px; cada sección alterna texto y una lámina animada (molécula, ruta, cerebro, sinapsis, osciloscopio). */
+:root{
+  --bg:#0e1124;        /* noche índigo: fondo del tejido */
+  --surface:#161a33;   /* láminas */
+  --surface-2:#1d2242;
+  --line:#2c3360;
+  --fg:#e9ebf7;
+  --muted:#9ea4c7;
+  --gaba:#9fa9ff;      /* GABA: inhibición, periwinkle */
+  --gaba-strong:#c3c9ff;
+  --glu:#ff8f70;       /* glutamato: excitación, coral */
+  --cl:#6fe0bf;        /* ion cloruro */
+  --warn:#ffcf6b;
+  --danger:#ff7a8a;
+  --font-display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --font-mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#eef0f8; --surface:#ffffff; --surface-2:#f4f5fb; --line:#d3d7ea;
+    --fg:#151933; --muted:#555c80; --gaba:#4a55d6; --gaba-strong:#2f38a8;
+    --glu:#cf4f2f; --cl:#0f8a69; --warn:#9a6a00; --danger:#c22d45;
+    color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#eef0f8; --surface:#ffffff; --surface-2:#f4f5fb; --line:#d3d7ea;
+  --fg:#151933; --muted:#555c80; --gaba:#4a55d6; --gaba-strong:#2f38a8;
+  --glu:#cf4f2f; --cl:#0f8a69; --warn:#9a6a00; --danger:#c22d45;
+  color-scheme:light;
+}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:17px;line-height:1.6}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+h1,h2,h3{font-family:var(--font-display);line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.6rem,7vw,5.2rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-.01em}
+h3{font-size:1.2rem;font-weight:600}
+p{margin:0;max-width:65ch}
+a{color:var(--gaba-strong)}
+a:focus-visible,button:focus-visible,input:focus-visible,.region:focus-visible{outline:2px solid var(--gaba);outline-offset:3px}
+.eyebrow{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gaba)}
+.mono{font-family:var(--font-mono)}
+.muted{color:var(--muted)}
+em.gaba{font-style:normal;color:var(--gaba-strong);font-weight:700}
+
+/* nav */
+.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-block:18px;border-bottom:1px solid var(--line)}
+.brand{font-family:var(--font-display);font-weight:800;font-size:1.15rem;letter-spacing:.02em;display:flex;align-items:center;gap:10px}
+.brand svg{width:26px;height:26px}
+.top nav{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:.92rem}
+.top nav a{color:var(--muted);text-decoration:none}
+.top nav a:hover{color:var(--fg)}
+
+section{padding-block:72px;border-bottom:1px solid var(--line)}
+.section-head{display:grid;gap:14px;margin-bottom:36px}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding-block:56px 64px}
+.hero > *{min-width:0}
+.hero h1 .greek{color:var(--gaba)}
+.hero .lede{font-size:1.2rem;margin-top:22px}
+.mol-box{position:relative;background:radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--gaba) 18%, transparent), transparent 65%);border-radius:50%;aspect-ratio:1/1;max-width:100%}
+#mol{width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#mol:active{cursor:grabbing}
+.mol-caption{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;font-family:var(--font-mono);font-size:.8rem;color:var(--muted);margin-top:8px;text-align:center}
+.legend-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:8px}
+.fact{background:var(--surface);padding:18px 20px;display:grid;gap:4px;align-content:start}
+.fact b{font-family:var(--font-display);font-size:1.9rem;font-weight:800;color:var(--gaba-strong);font-variant-numeric:tabular-nums;line-height:1.1}
+.fact span{font-size:.9rem;color:var(--muted)}
+
+/* plates */
+.plate{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px}
+.plate-scroll{overflow-x:auto}
+.plate-title{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:baseline;margin-bottom:12px}
+.plate-title .mono{font-size:.78rem;color:var(--muted)}
+
+/* síntesis */
+.shunt-svg{width:100%;min-width:720px;height:auto;display:block}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:28px}
+.step{display:grid;gap:8px;align-content:start;padding-top:14px;border-top:2px solid var(--gaba)}
+.step .n{font-family:var(--font-mono);font-size:.8rem;color:var(--gaba)}
+.step p{font-size:.95rem}
+svg text{font-family:var(--font-body)}
+.node rect{fill:var(--surface-2);stroke:var(--line);stroke-width:1.5}
+.node text{fill:var(--fg);font-size:15px;font-weight:700;text-anchor:middle;dominant-baseline:middle}
+.node.key rect{fill:color-mix(in srgb,var(--gaba) 22%,var(--surface));stroke:var(--gaba);stroke-width:2}
+.node.glu rect{stroke:var(--glu)}
+.enz rect{fill:var(--bg);stroke:var(--gaba);stroke-width:1.2}
+.enz text{fill:var(--gaba-strong);font-family:var(--font-mono);font-size:12px;font-weight:600;text-anchor:middle;dominant-baseline:middle}
+.flow{fill:none;stroke:var(--muted);stroke-width:2;stroke-dasharray:6 7;animation:dash 1.2s linear infinite}
+.flow.shunt{stroke:var(--gaba)}
+.note{fill:var(--muted);font-size:12px;text-anchor:middle}
+.krebs-ring{fill:none;stroke:var(--glu);stroke-width:3;stroke-dasharray:14 10;transform-box:fill-box;transform-origin:center;animation:spin 14s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-26}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.co2{animation:rise 3s ease-in infinite}
+@keyframes rise{0%{transform:translate(0,0);opacity:0}15%{opacity:1}100%{transform:translate(18px,-48px);opacity:0}}
+
+/* cerebro */
+.brain-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:24px;align-items:start}
+.brain-grid > *{min-width:0}
+.brain-svg{width:100%;height:auto;display:block}
+.brain-outline{fill:color-mix(in srgb,var(--gaba) 8%,var(--surface-2));stroke:var(--gaba);stroke-width:2.5}
+.cortex-glow{fill:none;stroke:var(--gaba);stroke-width:7;opacity:.25;animation:breathe 4s ease-in-out infinite}
+.gyrus{fill:none;stroke:var(--line);stroke-width:2.2;stroke-linecap:round}
+.cereb{fill:color-mix(in srgb,var(--gaba) 10%,var(--surface-2));stroke:var(--gaba);stroke-width:2}
+.stem{fill:var(--surface-2);stroke:var(--line);stroke-width:2}
+@keyframes breathe{50%{opacity:.6}}
+.region{cursor:pointer}
+.region .core{fill:var(--gaba)}
+.region .halo{fill:var(--gaba);opacity:.35;transform-box:fill-box;transform-origin:center;animation:halo 2.6s ease-out infinite}
+.region .ring{fill:none;stroke:var(--gaba);stroke-width:2;transform-box:fill-box;transform-origin:center;animation:ripple 2.6s ease-out infinite}
+.region text{fill:var(--fg);font-size:14px;font-weight:700;paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}
+.region.on .core{fill:var(--gaba-strong)}
+.region.on text{fill:var(--gaba-strong)}
+@keyframes halo{0%{transform:scale(.6);opacity:.5}100%{transform:scale(1.6);opacity:0}}
+@keyframes ripple{0%{transform:scale(.4);opacity:.9}100%{transform:scale(2.2);opacity:0}}
+.spark{fill:var(--gaba-strong)}
+.region-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.chip{font:inherit;font-size:.88rem;border:1px solid var(--line);background:var(--surface-2);color:var(--fg);border-radius:999px;padding:6px 14px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--gaba);color:var(--bg);border-color:var(--gaba)}
+.region-card{display:grid;gap:10px}
+.region-card h3{font-size:1.5rem}
+.periphery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.peri{display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:start;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.peri > div{min-width:0}
+.peri svg{width:64px;height:64px}
+.peri p{font-size:.92rem}
+
+/* sinapsis */
+.syn-grid{display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start}
+.syn-grid > *{min-width:0}
+#syn{width:100%;aspect-ratio:800/520;display:block;border-radius:12px;background:var(--bg)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+.btn{font:inherit;font-weight:700;font-size:.92rem;border-radius:10px;padding:9px 16px;cursor:pointer;border:1px solid var(--gaba);background:var(--gaba);color:var(--bg)}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.toggle{display:flex;align-items:center;gap:8px;font-size:.92rem;color:var(--muted)}
+.toggle input{accent-color:var(--gaba);width:18px;height:18px}
+.caption{margin-top:14px;padding:12px 16px;border-left:3px solid var(--cl);background:var(--surface-2);border-radius:0 10px 10px 0;font-size:.98rem;min-height:3.4em}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.85rem;color:var(--muted);margin-top:12px}
+.receptor-card{display:grid;gap:12px}
+.receptor-card svg{width:100%;max-width:260px;height:auto;margin:0 auto;display:block}
+.sub{stroke:var(--surface);stroke-width:3}
+.sub.a{fill:var(--gaba)}
+.sub.b{fill:color-mix(in srgb,var(--gaba) 55%,var(--glu))}
+.sub.g{fill:var(--cl)}
+.sub-label{fill:var(--bg);font-family:var(--font-mono);font-size:13px;font-weight:600;text-anchor:middle;dominant-baseline:middle}
+.pore-ion{fill:var(--cl)}
+.timeline{display:grid;gap:0;margin:0;padding:0;list-style:none;counter-reset:t}
+.timeline li{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:12px 0;border-top:1px solid var(--line);font-size:.95rem}
+.timeline li::before{counter-increment:t;content:counter(t);font-family:var(--font-mono);font-weight:600;color:var(--gaba);font-size:.9rem;padding-top:2px}
+.timeline li.active::before{color:var(--cl)}
+.timeline li.active{color:var(--fg)}
+.timeline li{color:var(--muted)}
+.mini-steps{margin-top:28px}
+
+/* acciones */
+.actions{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.action{display:grid;gap:10px;align-content:start;padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+.action svg{width:72px;height:72px}
+.action p{font-size:.92rem}
+.ic-stroke{fill:none;stroke:var(--gaba);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.ic-fill{fill:var(--gaba)}
+.ic-glu{fill:none;stroke:var(--glu);stroke-width:3;stroke-linecap:round}
+.damp{animation:damp 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes damp{0%,100%{transform:scaleY(1)}55%{transform:scaleY(.2)}}
+.breath{animation:breathc 5s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes breathc{50%{transform:scale(.6)}}
+.pupil{animation:look 4s ease-in-out infinite}
+@keyframes look{0%,100%{transform:translateX(0)}30%{transform:translateX(-7px)}65%{transform:translateX(7px)}}
+.blink{animation:blink 4s infinite;transform-box:fill-box;transform-origin:center}
+@keyframes blink{0%,46%,54%,100%{transform:scaleY(1)}50%{transform:scaleY(.1)}}
+.net-node{fill:var(--gaba);animation:node 2.4s ease-in-out infinite}
+.net-node:nth-child(2){animation-delay:.4s}.net-node:nth-child(3){animation-delay:.8s}.net-node:nth-child(4){animation-delay:1.2s}.net-node:nth-child(5){animation-delay:1.6s}
+@keyframes node{50%{fill:var(--cl)}}
+.limb{animation:limb 2.4s ease-in-out infinite;transform-origin:36px 30px}
+@keyframes limb{50%{transform:rotate(-24deg)}}
+
+/* equilibrio */
+.bal-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.bal-grid > *{min-width:0}
+#scope{width:100%;aspect-ratio:16/8;display:block;border-radius:12px;background:var(--bg)}
+.slider-row{display:grid;gap:8px;margin-top:16px}
+.slider-row input{width:100%;accent-color:var(--gaba)}
+.scale-labels{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:.78rem;color:var(--muted)}
+.state{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:.82rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 12px;border-radius:999px;border:1px solid currentColor}
+.state.low{color:var(--glu)}
+.state.ok{color:var(--cl)}
+.state.high{color:var(--gaba)}
+.cons{display:grid;gap:12px;margin:16px 0 0;padding:0;list-style:none}
+.cons li{display:grid;gap:2px;padding:12px 14px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line)}
+.cons li b{font-family:var(--font-display);font-size:1.05rem}
+.cons li span{font-size:.93rem;color:var(--muted)}
+.warnbox{margin-top:32px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;padding:18px 20px;border:1px solid var(--danger);border-radius:14px;background:color-mix(in srgb,var(--danger) 9%,var(--surface))}
+.warnbox > div{min-width:0}
+.warnbox svg{width:40px;height:40px}
+.warnbox h3{color:var(--danger);margin-bottom:6px}
+
+/* fuentes */
+.sources{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.sources li{display:grid;grid-template-columns:1fr;gap:2px;padding:12px 0;border-top:1px solid var(--line)}
+.sources a{word-break:break-word}
+footer{padding-block:32px 48px;font-size:.88rem;color:var(--muted)}
+
+@media (max-width:900px){
+  .hero,.brain-grid,.syn-grid,.bal-grid{grid-template-columns:1fr}
+  .mol-box{max-width:420px;margin:0 auto;width:100%}
+  .actions{grid-template-columns:repeat(2,1fr)}
+  .steps,.periphery{grid-template-columns:repeat(2,1fr)}
+  .facts{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:520px){
+  .steps,.periphery,.actions{grid-template-columns:1fr}
+  section{padding-block:52px}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <svg viewBox="0 0 26 26" aria-hidden="true"><circle cx="5" cy="17" r="4" fill="var(--gaba)"/><circle cx="13" cy="9" r="4" fill="var(--muted)"/><circle cx="21" cy="17" r="4" fill="var(--glu)"/><path d="M5 17 13 9 21 17" stroke="var(--fg)" stroke-width="1.6" fill="none"/></svg>
+      GABA
+    </div>
+    <nav aria-label="Secciones">
+      <a href="#sintesis">Síntesis</a>
+      <a href="#ubicacion">Ubicación</a>
+      <a href="#sinapsis">Movilidad</a>
+      <a href="#acciones">Acciones</a>
+      <a href="#equilibrio">Desequilibrio</a>
+      <a href="#fuentes">Fuentes</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <p class="eyebrow">Neurotransmisor inhibidor · SNC</p>
+      <h1>Ácido <span class="greek">γ</span>‑amino&shy;butírico</h1>
+      <p class="lede">El GABA es el principal neurotransmisor inhibidor del Sistema Nervioso Central. Su trabajo es frenar: reduce y modula la actividad de las neuronas para que no se sobreexciten y el cerebro funcione de forma ordenada.</p>
+      <div class="facts" style="margin-top:28px">
+        <div class="fact"><b>30–40 %</b><span>de las sinapsis del cerebro humano usan GABA</span></div>
+        <div class="fact"><b class="mono" style="font-size:1.45rem">C₄H₉NO₂</b><span>fórmula · 103,12 g/mol</span></div>
+        <div class="fact"><b>1949</b><span>se descubrió primero en la papa</span></div>
+        <div class="fact"><b class="mono" style="font-size:1.45rem">−70→−75</b><span>mV: hiperpolariza la neurona</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="mol-box">
+        <canvas id="mol" role="img" aria-label="Modelo 3D animado de la molécula de GABA: un grupo amino, tres carbonos metileno y un grupo carboxilo"></canvas>
+      </div>
+      <div class="mol-caption">
+        <span><i class="legend-dot" style="background:#6f8cff"></i>N amino</span>
+        <span><i class="legend-dot" style="background:#7d8399"></i>C</span>
+        <span><i class="legend-dot" style="background:#ff5c5c"></i>O carboxilo</span>
+        <span><i class="legend-dot" style="background:#e9ecf5;border:1px solid var(--muted)"></i>H</span>
+        <span>Arrastra para girar</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SÍNTESIS -->
+<section id="sintesis">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">01 · Cómo se produce</p>
+      <h2>La derivación del GABA <span class="muted" style="font-weight:600">(GABA shunt)</span></h2>
+      <p>El organismo fabrica y conserva sus niveles de GABA mediante una ruta metabólica que sale del ciclo de Krebs y vuelve a él. La animación sigue el recorrido de una molécula desde la glucosa hasta el GABA y de regreso.</p>
+    </div>
+
+    <div class="plate">
+      <div class="plate-title"><h3>Ruta metabólica animada</h3><span class="mono">terminal presináptica · citosol y mitocondria</span></div>
+      <div class="plate-scroll">
+        <svg class="shunt-svg" id="shunt" viewBox="0 0 960 400" role="img" aria-label="Diagrama animado de la derivación del GABA: glucosa, piruvato, ciclo de Krebs, alfa-cetoglutarato, glutamato, GABA, semialdehído succínico, succinato y regreso al ciclo de Krebs">
+          <defs>
+            <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="var(--muted)"/></marker>
+            <marker id="arrg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="var(--gaba)"/></marker>
+            <radialGradient id="dotg"><stop offset="0" stop-color="var(--gaba-strong)"/><stop offset="1" stop-color="var(--gaba)" stop-opacity="0"/></radialGradient>
+          </defs>
+
+          <!-- flechas de entrada -->
+          <path class="flow" d="M160 60 H215" marker-end="url(#arr)"/>
+          <text class="note" x="188" y="40">Glucólisis</text>
+          <path class="flow" d="M290 84 V165" marker-end="url(#arr)"/>
+          <text class="note" x="335" y="128" style="text-anchor:start">Acetil‑CoA</text>
+
+          <!-- Krebs -->
+          <circle cx="290" cy="250" r="80" fill="color-mix(in srgb,var(--glu) 8%,transparent)"/>
+          <circle class="krebs-ring" cx="290" cy="250" r="80"/>
+          <text x="290" y="244" text-anchor="middle" style="fill:var(--fg);font-family:var(--font-display);font-weight:800;font-size:18px">Ciclo de</text>
+          <text x="290" y="266" text-anchor="middle" style="fill:var(--fg);font-family:var(--font-display);font-weight:800;font-size:18px">Krebs</text>
+          <text x="290" y="288" text-anchor="middle" class="note">mitocondria</text>
+
+          <!-- derivación -->
+          <path class="flow shunt" d="M362 215 L430 125"  marker-end="url(#arrg)"/>
+          <path class="flow shunt" d="M585 110 H605" marker-end="url(#arrg)"/>
+          <path class="flow shunt" d="M755 110 H785" marker-end="url(#arrg)"/>
+          <path class="flow shunt" d="M860 134 V285" marker-end="url(#arrg)"/>
+          <path class="flow shunt" d="M768 310 H675" marker-end="url(#arrg)"/>
+          <path class="flow shunt" d="M530 310 L374 270" marker-end="url(#arrg)"/>
+
+          <!-- enzimas -->
+          <g class="enz"><rect x="560" y="64" width="72" height="24" rx="12"/><text x="596" y="77">GABA‑T</text></g>
+          <text class="note" x="596" y="146">transaminación</text>
+          <g class="enz"><rect x="740" y="64" width="56" height="24" rx="12"/><text x="768" y="77">GAD</text></g>
+          <text class="note" x="770" y="146">descarboxilación</text>
+          <g class="co2"><circle cx="782" cy="58" r="15" fill="var(--surface-2)" stroke="var(--glu)" stroke-width="1.5"/><text x="782" y="59" text-anchor="middle" dominant-baseline="middle" style="fill:var(--glu);font-family:var(--font-mono);font-size:10px;font-weight:600">CO₂</text></g>
+          <g class="enz"><rect x="868" y="198" width="72" height="24" rx="12"/><text x="904" y="211">GABA‑T</text></g>
+          <g class="enz"><rect x="688" y="274" width="64" height="24" rx="12"/><text x="720" y="287">SSADH</text></g>
+          <text class="note" x="720" y="344">oxidación</text>
+
+          <!-- nodos -->
+          <g class="node"><rect x="20" y="38" width="140" height="44" rx="10"/><text x="90" y="61">Glucosa</text></g>
+          <g class="node"><rect x="220" y="38" width="140" height="44" rx="10"/><text x="290" y="61">Piruvato</text></g>
+          <g class="node glu"><rect x="420" y="88" width="165" height="44" rx="10"/><text x="502" y="111">α‑cetoglutarato</text></g>
+          <g class="node glu"><rect x="610" y="88" width="145" height="44" rx="10"/><text x="682" y="111">L‑glutamato</text></g>
+          <g class="node key"><rect x="790" y="86" width="140" height="48" rx="10"/><text x="860" y="111" style="font-size:18px;font-family:var(--font-display)">GABA</text></g>
+          <g class="node"><rect x="770" y="288" width="180" height="44" rx="10"/><text x="860" y="311" style="font-size:13.5px">Semialdehído succínico</text></g>
+          <g class="node"><rect x="530" y="288" width="140" height="44" rx="10"/><text x="600" y="311">Succinato</text></g>
+
+          <!-- partículas en movimiento -->
+          <g>
+            <circle r="13" fill="url(#dotg)"><animateMotion dur="3.2s" repeatCount="indefinite" path="M90 60 L290 60 L290 170"/></circle>
+            <circle r="5" fill="var(--glu)"><animateMotion dur="3.2s" repeatCount="indefinite" path="M90 60 L290 60 L290 170"/></circle>
+          </g>
+          <g>
+            <circle r="16" fill="url(#dotg)"><animateMotion dur="9s" repeatCount="indefinite" path="M362 215 L502 110 L682 110 L860 110 L860 310 L600 310 L368 268 A80 80 0 0 0 362 215"/></circle>
+            <circle r="6" fill="var(--gaba-strong)"><animateMotion dur="9s" repeatCount="indefinite" path="M362 215 L502 110 L682 110 L860 110 L860 310 L600 310 L368 268 A80 80 0 0 0 362 215"/></circle>
+            <circle r="5" fill="var(--gaba)" opacity=".7"><animateMotion dur="9s" begin="-4.5s" repeatCount="indefinite" path="M362 215 L502 110 L682 110 L860 110 L860 310 L600 310 L368 268 A80 80 0 0 0 362 215"/></circle>
+          </g>
+          <g>
+            <circle r="4" fill="var(--glu)"><animateMotion dur="5s" repeatCount="indefinite" path="M290 170 A80 80 0 1 1 289.9 170"/></circle>
+            <circle r="4" fill="var(--glu)" opacity=".6"><animateMotion dur="5s" begin="-2.5s" repeatCount="indefinite" path="M290 170 A80 80 0 1 1 289.9 170"/></circle>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step"><span class="n">PASO 1</span><h3>Precursor metabólico</h3><p>La <b>glucosa</b> es la principal fuente precursora, junto con el piruvato y otros aminoácidos.</p></div>
+      <div class="step"><span class="n">PASO 2</span><h3>Formación de glutamato</h3><p>En el ciclo de Krebs la glucosa genera <b>α‑cetoglutarato</b>, que la enzima <b>GABA‑transaminasa (GABA‑T)</b> transforma en ácido L‑glutámico.</p></div>
+      <div class="step"><span class="n">PASO 3</span><h3>Conversión a GABA</h3><p>La enzima clave <b>glutamato descarboxilasa (GAD)</b> retira un CO₂ del ácido glutámico y lo convierte en GABA.</p></div>
+      <div class="step"><span class="n">PASO 4</span><h3>Marcador neuronal</h3><p>La GAD se expresa casi solo en células que usan GABA, por eso sirve como <b>marcador</b> para identificar neuronas GABAérgicas en el cerebro.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- UBICACIÓN -->
+<section id="ubicacion">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">02 · Dónde se encuentra</p>
+      <h2>Un freno repartido por todo el encéfalo</h2>
+      <p>Las neuronas GABAérgicas están en todo el encéfalo, aunque su densidad cambia mucho de una región a otra. Cada punto que late marca una población abundante. Toca una región para ver qué hace allí el GABA.</p>
+    </div>
+
+    <div class="brain-grid">
+      <div class="plate">
+        <svg class="brain-svg" id="brain" viewBox="0 0 600 430" role="img" aria-label="Corte sagital animado del encéfalo con las regiones ricas en neuronas GABAérgicas marcadas con pulsos">
+          <path class="cortex-glow" d="M120 250C80 200 90 120 160 85C220 50 320 40 400 60C480 80 540 140 530 210C525 250 500 270 470 280C440 300 400 300 370 295C340 300 300 305 270 300C220 300 160 290 120 250Z"/>
+          <path class="stem" d="M360 282C372 300 372 330 366 360C362 385 360 405 362 425L398 425C396 400 398 372 404 345C410 318 410 298 404 284Z"/>
+          <path class="cereb" d="M402 300C420 272 470 268 506 284C536 298 540 330 520 350C496 372 446 372 418 354C398 340 392 318 402 300Z"/>
+          <path class="gyrus" d="M420 300C450 292 490 294 520 312M414 320C446 314 486 318 524 332M420 340C452 338 484 342 512 352"/>
+          <path class="brain-outline" d="M120 250C80 200 90 120 160 85C220 50 320 40 400 60C480 80 540 140 530 210C525 250 500 270 470 280C440 300 400 300 370 295C340 300 300 305 270 300C220 300 160 290 120 250Z"/>
+          <path class="gyrus" d="M160 120C190 100 220 110 230 90M250 70C262 100 300 100 310 72M340 64C340 95 380 100 395 76M430 86C420 116 460 130 485 112M500 150C470 160 470 190 520 200M140 170C170 165 190 185 175 210M200 140C230 150 250 130 270 150M300 130C330 140 360 120 380 140M410 150C440 160 450 190 480 190M180 250C210 230 240 250 260 235M155 215C185 205 215 220 230 205"/>
+          <path class="gyrus" style="stroke:var(--muted);opacity:.5" d="M230 225C270 200 350 195 400 215C420 225 410 245 380 240C340 232 280 232 240 245Z"/>
+
+          <!-- chispas que viajan por la corteza -->
+          <circle class="spark" r="3"><animateMotion dur="7s" repeatCount="indefinite" path="M120 250C80 200 90 120 160 85C220 50 320 40 400 60C480 80 540 140 530 210C525 250 500 270 470 280"/></circle>
+          <circle class="spark" r="3"><animateMotion dur="7s" begin="-3.5s" repeatCount="indefinite" path="M120 250C80 200 90 120 160 85C220 50 320 40 400 60C480 80 540 140 530 210C525 250 500 270 470 280"/></circle>
+          <circle class="spark" r="2.5"><animateMotion dur="3s" repeatCount="indefinite" path="M300 190L330 250L370 235"/></circle>
+          <circle class="spark" r="2.5"><animateMotion dur="4s" repeatCount="indefinite" path="M330 250L450 320"/></circle>
+
+          <g class="region" data-r="corteza" tabindex="0" role="button" aria-label="Corteza cerebral">
+            <circle class="halo" cx="250" cy="100" r="16"/><circle class="ring" cx="250" cy="100" r="12"/><circle class="core" cx="250" cy="100" r="7"/>
+            <text x="270" y="96">Corteza cerebral</text>
+          </g>
+          <g class="region" data-r="ganglios" tabindex="0" role="button" aria-label="Ganglios basales">
+            <circle class="halo" cx="300" cy="185" r="16" style="animation-delay:.5s"/><circle class="ring" cx="300" cy="185" r="12" style="animation-delay:.5s"/><circle class="core" cx="300" cy="185" r="7"/>
+            <text x="180" y="174">Ganglios basales</text>
+          </g>
+          <g class="region" data-r="hipotalamo" tabindex="0" role="button" aria-label="Hipotálamo">
+            <circle class="halo" cx="318" cy="262" r="16" style="animation-delay:1s"/><circle class="ring" cx="318" cy="262" r="12" style="animation-delay:1s"/><circle class="core" cx="318" cy="262" r="7"/>
+            <text x="212" y="282">Hipotálamo</text>
+          </g>
+          <g class="region" data-r="hipocampo" tabindex="0" role="button" aria-label="Hipocampo">
+            <circle class="halo" cx="372" cy="238" r="16" style="animation-delay:1.5s"/><circle class="ring" cx="372" cy="238" r="12" style="animation-delay:1.5s"/><circle class="core" cx="372" cy="238" r="7"/>
+            <text x="392" y="232">Hipocampo</text>
+          </g>
+          <g class="region" data-r="cerebelo" tabindex="0" role="button" aria-label="Cerebelo">
+            <circle class="halo" cx="468" cy="326" r="16" style="animation-delay:2s"/><circle class="ring" cx="468" cy="326" r="12" style="animation-delay:2s"/><circle class="core" cx="468" cy="326" r="7"/>
+            <text x="488" y="392">Cerebelo</text>
+          </g>
+          <text x="30" y="410" class="note" style="text-anchor:start">Corte sagital · vista lateral izquierda</text>
+        </svg>
+      </div>
+
+      <div class="plate region-card">
+        <div class="region-list" role="group" aria-label="Regiones">
+          <button class="chip" data-r="corteza" aria-pressed="true">Corteza</button>
+          <button class="chip" data-r="ganglios" aria-pressed="false">Ganglios basales</button>
+          <button class="chip" data-r="hipotalamo" aria-pressed="false">Hipotálamo</button>
+          <button class="chip" data-r="hipocampo" aria-pressed="false">Hipocampo</button>
+          <button class="chip" data-r="cerebelo" aria-pressed="false">Cerebelo</button>
+        </div>
+        <p class="eyebrow" id="r-tag">Región</p>
+        <h3 id="r-name">Corteza cerebral</h3>
+        <p id="r-text"></p>
+      </div>
+    </div>
+
+    <div class="periphery">
+      <div class="peri">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M6 36C10 24 24 22 34 26C44 30 54 26 58 32C62 40 50 46 40 44C30 42 20 50 12 48C6 46 4 42 6 36Z" fill="color-mix(in srgb,var(--glu) 25%,transparent)" stroke="var(--glu)" stroke-width="2"/><circle cx="22" cy="36" r="4" fill="var(--gaba)"><animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite"/></circle><circle cx="36" cy="34" r="4" fill="var(--gaba)"><animate attributeName="r" values="3;5;3" dur="2s" begin=".6s" repeatCount="indefinite"/></circle><circle cx="48" cy="37" r="3" fill="var(--cl)"/></svg>
+        <div><h3>Páncreas</h3><p>Las células beta producen GABA, que parece participar en la regulación de la secreción de glucagón por las células alfa.</p></div>
+      </div>
+      <div class="peri">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="36" rx="22" ry="17" fill="color-mix(in srgb,var(--warn) 30%,transparent)" stroke="var(--warn)" stroke-width="2"/><circle cx="24" cy="32" r="1.8" fill="var(--warn)"/><circle cx="38" cy="40" r="1.8" fill="var(--warn)"/><circle cx="40" cy="29" r="1.8" fill="var(--warn)"/><path d="M32 19C30 12 34 8 38 6" fill="none" stroke="var(--cl)" stroke-width="2.5" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" values="-8 32 19;8 32 19;-8 32 19" dur="3s" repeatCount="indefinite"/></path></svg>
+        <div><h3>La papa, 1949</h3><p>El GABA se descubrió primero en tejido vegetal, en la papa, antes de identificarse en el cerebro.</p></div>
+      </div>
+      <div class="peri">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="10" y="22" width="30" height="16" rx="8" fill="color-mix(in srgb,var(--cl) 25%,transparent)" stroke="var(--cl)" stroke-width="2"><animateTransform attributeName="transform" type="translate" values="0 0;4 2;0 0" dur="3s" repeatCount="indefinite"/></rect><path d="M44 50V40M44 40C38 40 36 34 44 32C52 34 50 40 44 40Z" fill="color-mix(in srgb,var(--gaba) 30%,transparent)" stroke="var(--gaba)" stroke-width="2"/><circle cx="20" cy="50" r="4" fill="var(--glu)"><animate attributeName="cy" values="50;46;50" dur="2.4s" repeatCount="indefinite"/></circle></svg>
+        <div><h3>Más allá del cerebro</h3><p>También se ha detectado en tejidos periféricos y en numerosas especies de plantas, bacterias y hongos.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SINAPSIS -->
+<section id="sinapsis">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">03 · Cómo se mueve en el SNC</p>
+      <h2>El viaje del GABA a través de la sinapsis</h2>
+      <p>Esta simulación muestra una sinapsis GABAérgica en tiempo real. Cada punto violeta es una molécula de GABA; los puntos verdes son iones cloruro (Cl⁻). Observa cómo la entrada de cloruro baja el potencial de la neurona receptora en el osciloscopio inferior.</p>
+    </div>
+
+    <div class="syn-grid">
+      <div class="plate">
+        <canvas id="syn" role="img" aria-label="Simulación animada de una sinapsis GABAérgica: liberación de GABA desde vesículas, unión a receptores GABA-A, entrada de cloruro y recaptación por transportadores"></canvas>
+        <div class="controls">
+          <button class="btn" id="fire" type="button">Disparar potencial de acción</button>
+          <button class="btn ghost" id="pause" type="button">Pausar</button>
+          <label class="toggle" for="benzo"><input type="checkbox" id="benzo"> Añadir benzodiacepina</label>
+        </div>
+        <p class="caption" id="syn-cap">Reposo: las vesículas se rellenan de GABA mediante el transportador VGAT.</p>
+        <div class="legend">
+          <span><i class="legend-dot" style="background:var(--gaba)"></i>GABA</span>
+          <span><i class="legend-dot" style="background:var(--cl)"></i>Cl⁻ (cloruro)</span>
+          <span><i class="legend-dot" style="background:transparent;border:2px solid var(--gaba)"></i>Vesícula sináptica</span>
+          <span><i class="legend-dot" style="background:var(--glu);border-radius:3px"></i>Transportador GAT</span>
+        </div>
+      </div>
+
+      <div class="plate receptor-card">
+        <h3>Receptor GABA‑A</h3>
+        <svg viewBox="0 0 260 230" role="img" aria-label="Receptor GABA-A animado: cinco subunidades alrededor de un poro por el que pasan iones cloruro">
+          <g id="pent" style="transform-origin:130px 115px">
+            <g><circle class="sub a" cx="130" cy="52" r="34"/><text class="sub-label" x="130" y="52">α</text></g>
+            <g><circle class="sub b" cx="190" cy="96" r="34"/><text class="sub-label" x="190" y="96">β</text></g>
+            <g><circle class="sub a" cx="167" cy="166" r="34"/><text class="sub-label" x="167" y="166">α</text></g>
+            <g><circle class="sub b" cx="93" cy="166" r="34"/><text class="sub-label" x="93" y="166">β</text></g>
+            <g><circle class="sub g" cx="70" cy="96" r="34"/><text class="sub-label" x="70" y="96">γ</text></g>
+          </g>
+          <circle cx="130" cy="117" r="20" fill="var(--bg)" stroke="var(--line)"/>
+          <circle class="pore-ion" cx="130" cy="117" r="5"><animate attributeName="r" values="0;7;0" dur="1.4s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;.2;1" dur="1.4s" repeatCount="indefinite"/></circle>
+          <circle class="pore-ion" cx="130" cy="117" r="4"><animate attributeName="r" values="0;7;0" dur="1.4s" begin=".7s" repeatCount="indefinite"/></circle>
+        </svg>
+        <p style="font-size:.93rem">Es un canal iónico de cinco piezas. Cuando dos moléculas de GABA se unen entre las subunidades α y β, el poro central se abre y deja pasar Cl⁻ hacia dentro de la neurona. Las benzodiacepinas se unen entre α y γ y potencian ese efecto.</p>
+        <p style="font-size:.93rem" class="muted">El receptor <b style="color:var(--fg)">GABA‑B</b>, en cambio, es metabotrópico: actúa a través de proteínas G, abre canales de potasio y produce una inhibición más lenta y duradera.</p>
+      </div>
+    </div>
+
+    <div class="mini-steps plate">
+      <h3 style="margin-bottom:8px">Las fases del recorrido</h3>
+      <ol class="timeline" id="phases">
+        <li data-p="0"><span><b>Almacenamiento.</b> El GABA recién sintetizado entra a las vesículas sinápticas a través del transportador vesicular VGAT.</span></li>
+        <li data-p="1"><span><b>Llegada del impulso.</b> Un potencial de acción recorre el axón y alcanza la terminal presináptica.</span></li>
+        <li data-p="2"><span><b>Liberación.</b> Las vesículas se fusionan con la membrana y vierten GABA a la hendidura sináptica (exocitosis).</span></li>
+        <li data-p="3"><span><b>Unión y efecto.</b> El GABA se difunde y se une a los receptores GABA‑A. Entra Cl⁻ y la neurona postsináptica se hiperpolariza: se aleja del umbral de disparo.</span></li>
+        <li data-p="4"><span><b>Recaptación.</b> Los transportadores GAT devuelven el GABA a la neurona y a los astrocitos vecinos. En el astrocito se convierte en glutamina, que vuelve a la neurona para fabricar más GABA.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ACCIONES -->
+<section id="acciones">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">04 · Qué hace</p>
+      <h2>Acciones del GABA</h2>
+    </div>
+    <div class="actions">
+      <div class="action">
+        <svg viewBox="0 0 72 72" aria-hidden="true"><g class="damp"><path class="ic-glu" d="M6 36L14 36L18 14L24 58L30 22L36 50L42 30L48 42L54 36L66 36"/></g><path class="ic-stroke" d="M6 36H66" opacity=".4"/></svg>
+        <h3>Inhibición neuronal</h3>
+        <p>Reduce, frena o modula la actividad de las neuronas para evitar que se sobreexciten.</p>
+      </div>
+      <div class="action">
+        <svg viewBox="0 0 72 72" aria-hidden="true"><path class="ic-fill" style="opacity:.25" d="M36 62C18 50 8 40 8 27C8 18 15 12 23 12C29 12 33 15 36 19C39 15 43 12 49 12C57 12 64 18 64 27C64 40 54 50 36 62Z"/><g class="damp" style="animation-duration:2.2s"><path class="ic-stroke" d="M14 36H26L30 26L36 46L40 32L44 36H58"/></g></svg>
+        <h3>Miedo y ansiedad</h3>
+        <p>Ayuda a mantener bajo control las respuestas de miedo y ansiedad cuando hay sobreestimulación nerviosa.</p>
+      </div>
+      <div class="action">
+        <svg viewBox="0 0 72 72" aria-hidden="true"><circle class="ic-fill breath" cx="36" cy="36" r="24" style="opacity:.3"/><circle class="ic-stroke breath" cx="36" cy="36" r="16"/><circle cx="36" cy="36" r="4" fill="var(--cl)"/></svg>
+        <h3>Regulación del estrés</h3>
+        <p>Participa en circuitos de respuesta al estrés, como el hipocampo ventral. El ejercicio regular y el yoga pueden elevar sus niveles.</p>
+      </div>
+      <div class="action">
+        <svg viewBox="0 0 72 72" aria-hidden="true"><g class="blink"><path class="ic-stroke" d="M6 36C16 20 56 20 66 36C56 52 16 52 6 36Z"/><g class="pupil"><circle cx="36" cy="36" r="9" class="ic-fill"/><circle cx="39" cy="33" r="2.5" fill="var(--surface)"/></g></g></svg>
+        <h3>Control motor y visión</h3>
+        <p>Contribuye de forma directa o indirecta a funciones corticales como el control del movimiento y la visión.</p>
+      </div>
+      <div class="action">
+        <svg viewBox="0 0 72 72" aria-hidden="true"><path class="ic-stroke" style="stroke-width:2;opacity:.6" d="M14 20L36 12L58 24L50 52L22 54L14 20L36 36L58 24M36 36L50 52M36 36L22 54M36 12L36 36"/><g><circle class="net-node" cx="14" cy="20" r="5"/><circle class="net-node" cx="36" cy="12" r="5"/><circle class="net-node" cx="58" cy="24" r="5"/><circle class="net-node" cx="50" cy="52" r="5"/><circle class="net-node" cx="22" cy="54" r="5"/></g><circle cx="36" cy="36" r="6" fill="var(--glu)"/></svg>
+        <h3>Cognición y conducta</h3>
+        <p>Tiene un papel fundamental en la modulación general del comportamiento y de los procesos cognitivos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EQUILIBRIO -->
+<section id="equilibrio">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">05 · Consecuencias del desequilibrio</p>
+      <h2>Ni sin freno, ni con el freno de mano puesto</h2>
+      <p>Mueve el control para cambiar el nivel de actividad GABAérgica y mira cómo responde una neurona en el osciloscopio. Con poco GABA dispara sin control; con demasiado, casi se apaga.</p>
+    </div>
+
+    <div class="bal-grid">
+      <div class="plate">
+        <div class="plate-title"><h3>Registro de membrana</h3><span class="mono" id="rate">— disparos/s</span></div>
+        <canvas id="scope" role="img" aria-label="Osciloscopio animado del potencial de membrana de una neurona según el nivel de GABA"></canvas>
+        <div class="slider-row">
+          <label for="lvl" class="eyebrow" style="color:var(--muted)">Actividad GABAérgica</label>
+          <input type="range" id="lvl" min="0" max="100" value="50">
+          <div class="scale-labels"><span>déficit</span><span>equilibrio</span><span>exceso</span></div>
+        </div>
+      </div>
+
+      <div class="plate">
+        <span class="state ok" id="state-chip">Equilibrio</span>
+        <h3 id="state-title" style="margin-top:14px;font-size:1.5rem">Actividad ordenada</h3>
+        <p id="state-intro" style="margin-top:8px"></p>
+        <ul class="cons" id="cons"></ul>
+      </div>
+    </div>
+
+    <div class="warnbox">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4L37 34H3Z" fill="none" stroke="var(--danger)" stroke-width="2.5" stroke-linejoin="round"/><path d="M20 15V24" stroke="var(--danger)" stroke-width="3" stroke-linecap="round"/><circle cx="20" cy="29" r="1.8" fill="var(--danger)"/></svg>
+      <div>
+        <h3>Exceso por medicamentos o sustancias depresoras</h3>
+        <p>Un aumento desproporcionado de la actividad GABAérgica suele deberse a fármacos o sustancias depresoras. Puede causar sedación excesiva y somnolencia, depresión del SNC (mareos, confusión, falta de coordinación) y, en casos graves, dificultad respiratoria, sobre todo al combinar benzodiacepinas con alcohol u opioides.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FUENTES -->
+<section id="fuentes" style="border-bottom:0">
+  <div class="wrap">
+    <div class="section-head"><p class="eyebrow">Referencias</p><h2>Fuentes</h2></div>
+    <ul class="sources">
+      <li><a href="https://www.ncbi.nlm.nih.gov/books/NBK27979/" target="_blank" rel="noopener">NCBI Bookshelf · Basic Neurochemistry: GABA</a><span class="muted">Síntesis, derivación del GABA y la enzima GAD como marcador.</span></li>
+      <li><a href="https://psicologiaymente.com/neurociencias/gaba-neurotransmisor" target="_blank" rel="noopener">Psicología y Mente · GABA (neurotransmisor)</a><span class="muted">Acciones y consecuencias de la actividad GABAérgica.</span></li>
+      <li><a href="https://www.cun.es/diccionario-medico/terminos/acido-gammaaminobutirico" target="_blank" rel="noopener">Clínica Universidad de Navarra · Ácido gamma‑aminobutírico</a><span class="muted">Distribución en el encéfalo, páncreas y descubrimiento en la papa.</span></li>
+      <li><a href="https://mhanational.org/es/resources/what-is-gaba/" target="_blank" rel="noopener">Mental Health America · ¿Qué es el GABA?</a><span class="muted">Consecuencias del déficit y del exceso de GABA.</span></li>
+    </ul>
+  </div>
+</section>
+
+<div class="wrap"><footer>Página con fines educativos. No sustituye la consulta con un profesional de la salud.</footer></div>
+
+<script>
+(function(){
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let C = {};
+function readColors(){
+  const s = getComputedStyle(document.documentElement);
+  ['bg','surface','surface-2','line','fg','muted','gaba','gaba-strong','glu','cl','warn','danger'].forEach(k=>C[k]=s.getPropertyValue('--'+k).trim());
+}
+readColors();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', readColors);
+new MutationObserver(readColors).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+
+function fitCanvas(cv, w, h){
+  const dpr = Math.min(window.devicePixelRatio||1, 2);
+  const r = cv.getBoundingClientRect();
+  const W = Math.max(1, Math.round(r.width*dpr)), H = Math.max(1, Math.round(r.height*dpr));
+  if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H;}
+  const ctx = cv.getContext('2d');
+  const s = Math.min(W/w, H/h);
+  ctx.setTransform(s,0,0,s,(W-w*s)/2,(H-h*s)/2);
+  return ctx;
+}
+function hexA(col, a){
+  // acepta #rrggbb
+  if(!col || col[0]!=='#') return col;
+  const n = parseInt(col.slice(1),16);
+  return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;
+}
+
+/* ---------- Molécula 3D ---------- */
+const mol = document.getElementById('mol');
+const atoms = [
+  {e:'N', p:[-3.1, 0.4, 0]},
+  {e:'C', p:[-1.9,-0.4, 0], g:'γ'},
+  {e:'C', p:[-0.6, 0.4, 0], g:'β'},
+  {e:'C', p:[ 0.6,-0.4, 0], g:'α'},
+  {e:'C', p:[ 1.9, 0.4, 0]},
+  {e:'O', p:[ 1.9, 1.65,0]},
+  {e:'O', p:[ 3.05,-0.3,0]},
+  {e:'H', p:[ 3.85, 0.2,0]},
+  {e:'H', p:[-3.75, 0.95, 0.8]},
+  {e:'H', p:[-3.75, 0.95,-0.8]},
+  {e:'H', p:[-1.9,-1.05, 0.9]},{e:'H', p:[-1.9,-1.05,-0.9]},
+  {e:'H', p:[-0.6, 1.05, 0.9]},{e:'H', p:[-0.6, 1.05,-0.9]},
+  {e:'H', p:[ 0.6,-1.05, 0.9]},{e:'H', p:[ 0.6,-1.05,-0.9]},
+];
+const bonds = [[0,1],[1,2],[2,3],[3,4],[4,5,2],[4,6],[6,7],[0,8],[0,9],[1,10],[1,11],[2,12],[2,13],[3,14],[3,15]];
+const EL = {N:{c:'#6f8cff',r:.42},C:{c:'#7d8399',r:.44},O:{c:'#ff5c5c',r:.42},H:{c:'#e9ecf5',r:.24}};
+let ay=0.6, ax=0.35, drag=null, molVel=0.006;
+mol.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY};mol.setPointerCapture(e.pointerId)});
+mol.addEventListener('pointermove',e=>{if(!drag)return;ay+=(e.clientX-drag.x)*0.01;ax+=(e.clientY-drag.y)*0.01;ax=Math.max(-1.3,Math.min(1.3,ax));drag={x:e.clientX,y:e.clientY};drawMol()});
+mol.addEventListener('pointerup',()=>drag=null);
+mol.addEventListener('pointercancel',()=>drag=null);
+function drawMol(t){
+  const ctx = fitCanvas(mol, 500, 500);
+  ctx.clearRect(-500,-500,1500,1500);
+  const ca=Math.cos(ay), sa=Math.sin(ay), cb=Math.cos(ax), sb=Math.sin(ax);
+  const bob = t? Math.sin(t/900)*0.12 : 0;
+  const P = atoms.map(a=>{
+    let [x,y,z]=a.p; x-=0.2;
+    let x1=x*ca+z*sa, z1=-x*sa+z*ca;
+    let y1=y*cb-z1*sb, z2=y*sb+z1*cb;
+    y1+=bob;
+    const f = 7/(7-z2), S=56;
+    return {x:250+x1*S*f, y:250-y1*S*f, z:z2, f};
+  });
+  // enlaces
+  bonds.forEach(b=>{
+    const A=P[b[0]],B=P[b[1]];
+    ctx.strokeStyle = C.muted; ctx.lineWidth = 7*(A.f+B.f)/2; ctx.lineCap='round';
+    if(b[2]){
+      const dx=B.x-A.x, dy=B.y-A.y, L=Math.hypot(dx,dy)||1, ox=-dy/L*6, oy=dx/L*6;
+      ctx.lineWidth=4.5;
+      [[ox,oy],[-ox,-oy]].forEach(([u,v])=>{ctx.beginPath();ctx.moveTo(A.x+u,A.y+v);ctx.lineTo(B.x+u,B.y+v);ctx.stroke()});
+    } else {ctx.beginPath();ctx.moveTo(A.x,A.y);ctx.lineTo(B.x,B.y);ctx.stroke();}
+  });
+  const order = P.map((p,i)=>i).sort((i,j)=>P[i].z-P[j].z);
+  order.forEach(i=>{
+    const a=atoms[i], p=P[i], el=EL[a.e], r=el.r*56*p.f;
+    const g=ctx.createRadialGradient(p.x-r*.35,p.y-r*.35,r*.1,p.x,p.y,r);
+    g.addColorStop(0,'#ffffff'); g.addColorStop(.25,el.c); g.addColorStop(1,shade(el.c));
+    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(p.x,p.y,r,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle=hexA(C.bg,.5)||'#0008'; ctx.lineWidth=1.2; ctx.stroke();
+    if(a.e!=='H'){
+      ctx.fillStyle = a.e==='C' ? '#ffffff' : '#ffffff';
+      ctx.font = `700 ${Math.round(r*.8)}px "JetBrains Mono", monospace`;
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(a.g||a.e, p.x, p.y+1);
+    }
+  });
+  ctx.font='600 15px "JetBrains Mono", monospace'; ctx.fillStyle=C.muted; ctx.textAlign='center';
+  ctx.fillText('H₂N–CH₂–CH₂–CH₂–COOH', 250, 470);
+}
+function shade(hex){const n=parseInt(hex.slice(1),16);const k=.45;return `rgb(${(n>>16&255)*k|0},${(n>>8&255)*k|0},${(n&255)*k|0})`}
+
+/* ---------- Cerebro: regiones ---------- */
+const REG = {
+  corteza:{tag:'Funciones superiores',name:'Corteza cerebral',text:'Las interneuronas GABAérgicas corticales esculpen la actividad de las neuronas excitadoras. Gracias a ellas el GABA contribuye al control del movimiento, la visión y los procesos cognitivos.'},
+  ganglios:{tag:'Movimiento',name:'Ganglios basales',text:'Son una de las zonas con más neuronas GABAérgicas. Sus circuitos inhibidores seleccionan qué movimientos se ejecutan y cuáles se frenan.'},
+  hipotalamo:{tag:'Regulación interna',name:'Hipotálamo',text:'Sus poblaciones GABAérgicas intervienen en el sueño, el apetito y la respuesta hormonal al estrés.'},
+  hipocampo:{tag:'Memoria y estrés',name:'Hipocampo',text:'Las interneuronas GABAérgicas marcan el ritmo de la actividad del hipocampo. El hipocampo ventral forma parte de los circuitos de respuesta al estrés en los que participa el GABA.'},
+  cerebelo:{tag:'Coordinación',name:'Cerebelo',text:'Las células de Purkinje, las neuronas de salida del cerebelo, son GABAérgicas: inhiben a los núcleos profundos para afinar la coordinación y el equilibrio.'}
+};
+const regions=[...document.querySelectorAll('.region')], chips=[...document.querySelectorAll('.chip')];
+function pick(k){
+  const r=REG[k];
+  document.getElementById('r-tag').textContent=r.tag;
+  document.getElementById('r-name').textContent=r.name;
+  document.getElementById('r-text').textContent=r.text;
+  regions.forEach(g=>g.classList.toggle('on',g.dataset.r===k));
+  chips.forEach(c=>c.setAttribute('aria-pressed',c.dataset.r===k));
+}
+regions.forEach(g=>{g.addEventListener('click',()=>pick(g.dataset.r));g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick(g.dataset.r)}})});
+chips.forEach(c=>c.addEventListener('click',()=>pick(c.dataset.r)));
+pick('corteza');
+if(reduce){['shunt','brain'].forEach(id=>{const s=document.getElementById(id);s.pauseAnimations&&s.pauseAnimations()});document.querySelectorAll('.peri svg,.receptor-card svg').forEach(s=>s.pauseAnimations&&s.pauseAnimations())}
+
+/* ---------- Sinapsis ---------- */
+const syn=document.getElementById('syn');
+const capEl=document.getElementById('syn-cap');
+const phaseLis=[...document.querySelectorAll('#phases li')];
+const W=800,H=520;
+const preBottom=x=>{const u=(x-375)/225;return 200+12.5*(1-u*u)};
+const postTop=x=>{const u=(x-375)/275;return 290-14*(1-u*u)};
+const receptors=[220,310,400,490,560].map(x=>({x,y:postTop(x),openUntil:0}));
+const transporters=[{x:178,y:preBottom(178)+2,to:'pre'},{x:575,y:preBottom(575)+2,to:'pre'},{x:640,y:244,to:'astro'}];
+let vesicles=[], gaba=[], ions=[], uptakes=[], pulse=null, playing=!reduce, benzo=false, lastFire=-1e9, lastT=0, V=-70, hist=[], phase=0, phaseUntil=0, tNow=0;
+function seedVesicles(){vesicles=[];const spots=[[230,150],[300,175],[380,182],[455,172],[520,150],[270,115],[350,130],[430,120],[490,110]];spots.forEach(([x,y])=>vesicles.push({x,y,hx:x,hy:y,state:'full',a:1,t:0}))}
+seedVesicles();
+document.getElementById('benzo').addEventListener('change',e=>benzo=e.target.checked);
+document.getElementById('fire').addEventListener('click',()=>{fire(tNow); if(!playing){playing=true;updPause();lastT=performance.now();requestAnimationFrame(loop)}});
+const pauseBtn=document.getElementById('pause');
+function updPause(){pauseBtn.textContent=playing?'Pausar':'Reanudar'}
+updPause();
+pauseBtn.addEventListener('click',()=>{playing=!playing;updPause();if(playing){lastT=performance.now();requestAnimationFrame(loop)}});
+function fire(t){pulse={t0:t};lastFire=t;setPhase(1,t+700)}
+function setPhase(p,until){phase=p;phaseUntil=until}
+const CAPS=[
+ 'Reposo: las vesículas se rellenan de GABA mediante el transportador VGAT.',
+ 'Llega el potencial de acción a la terminal presináptica.',
+ 'Las vesículas se fusionan con la membrana y liberan GABA a la hendidura (exocitosis).',
+ 'El GABA se une a los receptores GABA‑A: entra Cl⁻ y la neurona se hiperpolariza.',
+ 'Recaptación: los transportadores GAT devuelven el GABA a la neurona y al astrocito.'
+];
+function release(t){
+  const full=vesicles.filter(v=>v.state==='full').sort((a,b)=>b.y-a.y).slice(0,2);
+  full.forEach(v=>{v.state='moving';v.t=t;v.sx=v.x;v.sy=v.y;v.tx=Math.max(200,Math.min(550,v.x+(Math.random()-.5)*40));v.ty=preBottom(v.tx)-14});
+  setPhase(2,t+900);
+}
+function step(dt,t){
+  tNow=t;
+  if(playing && t-lastFire>4800) fire(t);
+  if(pulse && t-pulse.t0>700){release(t);pulse=null}
+  vesicles.forEach(v=>{
+    if(v.state==='moving'){const k=Math.min(1,(t-v.t)/350);v.x=v.sx+(v.tx-v.sx)*k;v.y=v.sy+(v.ty-v.sy)*k;if(k>=1){v.state='fused';v.t=t;for(let i=0;i<16;i++)gaba.push({x:v.x+(Math.random()-.5)*14,y:preBottom(v.x)+4,vx:(Math.random()-.5)*1.6,vy:Math.random()*1.4+.4,born:t,state:'free',cool:0})}}
+    else if(v.state==='fused'){v.a=Math.max(0,1-(t-v.t)/400);if(t-v.t>2600){v.state='refill';v.t=t;v.x=v.hx;v.y=v.hy-20}}
+    else if(v.state==='refill'){const k=Math.min(1,(t-v.t)/900);v.a=k;v.y=v.hy-20+20*k;if(k>=1)v.state='full'}
+  });
+  const f=dt/16.7;
+  gaba.forEach(p=>{
+    if(p.state==='bound'){if(t>p.until){p.state='free';p.cool=t+500;p.vy=-1.2;p.vx=(Math.random()-.5)*2}return}
+    p.vx+=(Math.random()-.5)*.5*f; p.vy+=(Math.random()-.5)*.5*f;
+    p.vx*=.96; p.vy*=.96;
+    p.x+=p.vx*f; p.y+=p.vy*f;
+    const top=preBottom(p.x)+3, bot=postTop(p.x)-4;
+    if(p.y<top){p.y=top;p.vy=Math.abs(p.vy)}
+    if(p.y>bot){p.y=bot;p.vy=-Math.abs(p.vy)}
+    if(p.x<150){p.x=150;p.vx=Math.abs(p.vx)}
+    if(p.x>652){p.x=652;p.vx=-Math.abs(p.vx)}
+    // unión
+    if(t>p.cool){for(const r of receptors){if(r.openUntil<t && Math.hypot(p.x-r.x,p.y-(r.y-6))<13){const d=benzo?1500:650;r.openUntil=t+d;r.opened=t;p.state='bound';p.until=t+d;p.x=r.x;p.y=r.y-7;if(phase<3||phase===4)setPhase(3,t+1200);break}}}
+    // recaptación
+    const age=t-p.born;
+    if(p.state==='free' && age>1200){for(const tr of transporters){if(Math.hypot(p.x-tr.x,p.y-tr.y)<(age>6000?40:18) && Math.random()<.08*f){p.state='gone';uptakes.push({x:p.x,y:p.y,tx:tr.to==='pre'?tr.x+(tr.x<375?30:-30):720,ty:tr.to==='pre'?150:250,t0:t,astro:tr.to==='astro'});if(phase!==3||t>phaseUntil)setPhase(4,t+1400);break}}}
+    if(age>11000)p.state='gone';
+  });
+  gaba=gaba.filter(p=>p.state!=='gone');
+  uptakes=uptakes.filter(u=>t-u.t0<900);
+  let open=0;
+  receptors.forEach(r=>{if(r.openUntil>t){open++; if(Math.random()<.35*f)ions.push({x:r.x+(Math.random()-.5)*6,y:r.y-22,vy:1.3+Math.random()*.6,vx:(Math.random()-.5)*.8,t0:t})}});
+  ions.forEach(i=>{i.y+=i.vy*f;i.x+=i.vx*f});
+  ions=ions.filter(i=>t-i.t0<1600 && i.y<392);
+  const target=-70-Math.min(9,open*(benzo?2.6:1.9));
+  V+= (target-V)*0.05*f;
+  hist.push(V); if(hist.length>260)hist.shift();
+  if(t>phaseUntil && phase!==0 && !gaba.length) setPhase(0,0);
+  else if(t>phaseUntil && phase===2) setPhase(gaba.some(g=>g.state==='bound')?3:4, t+800);
+}
+let lastPhaseShown=-1;
+function drawSyn(t){
+  const ctx=fitCanvas(syn,W,H);
+  ctx.clearRect(-W,-H,W*3,H*3);
+  ctx.fillStyle=C.bg; ctx.fillRect(0,0,W,H);
+  // astrocito
+  ctx.beginPath();ctx.moveTo(800,110);ctx.bezierCurveTo(720,110,690,160,668,215);ctx.bezierCurveTo(660,235,645,240,640,244);ctx.bezierCurveTo(645,248,660,253,668,272);ctx.bezierCurveTo(690,330,720,400,800,400);ctx.closePath();
+  ctx.fillStyle=hexA(C.warn,.13);ctx.fill();ctx.strokeStyle=hexA(C.warn,.7);ctx.lineWidth=2;ctx.stroke();
+  // pre
+  ctx.beginPath();ctx.moveTo(345,0);ctx.lineTo(345,50);ctx.bezierCurveTo(345,70,160,70,155,120);ctx.lineTo(150,200);ctx.quadraticCurveTo(375,225,600,200);ctx.lineTo(595,120);ctx.bezierCurveTo(590,70,405,70,405,50);ctx.lineTo(405,0);ctx.closePath();
+  ctx.fillStyle=hexA(C.gaba,.12);ctx.fill();ctx.strokeStyle=C.gaba;ctx.lineWidth=2.5;ctx.stroke();
+  // post
+  ctx.beginPath();ctx.moveTo(100,520);ctx.lineTo(100,290);ctx.quadraticCurveTo(375,262,650,290);ctx.lineTo(650,520);ctx.closePath();
+  const hyper=Math.max(0,Math.min(1,(-70-V)/8));
+  ctx.fillStyle=hexA(C.cl,.07+hyper*.14);ctx.fill();ctx.strokeStyle=hexA(C.cl,.85);ctx.lineWidth=2.5;ctx.stroke();
+  // potencial de acción
+  if(pulse){const k=Math.min(1,(t-pulse.t0)/700);const y=k*190;const g=ctx.createRadialGradient(375,y,2,375,y,60);g.addColorStop(0,hexA(C.warn,.9));g.addColorStop(1,hexA(C.warn,0));ctx.fillStyle=g;ctx.beginPath();ctx.arc(375,y,60,0,Math.PI*2);ctx.fill()}
+  // vesículas
+  vesicles.forEach(v=>{
+    if(v.a<=0)return; ctx.globalAlpha=v.a;
+    ctx.beginPath();ctx.arc(v.x,v.y,16,0,Math.PI*2);ctx.fillStyle=hexA(C.gaba,.15);ctx.fill();ctx.strokeStyle=C.gaba;ctx.lineWidth=2;ctx.stroke();
+    ctx.fillStyle=C['gaba-strong'];
+    for(let i=0;i<6;i++){const a=i*1.05+t/700, rr=7;ctx.beginPath();ctx.arc(v.x+Math.cos(a)*rr,v.y+Math.sin(a)*rr,2.4,0,Math.PI*2);ctx.fill()}
+    ctx.globalAlpha=1;
+  });
+  // transportadores
+  transporters.forEach(tr=>{ctx.fillStyle=C.glu;ctx.beginPath();if(ctx.roundRect)ctx.roundRect(tr.x-7,tr.y-9,14,18,4);else ctx.rect(tr.x-7,tr.y-9,14,18);ctx.fill()});
+  // receptores
+  receptors.forEach(r=>{
+    const open=r.openUntil>t;
+    ctx.fillStyle=open?C.cl:C.gaba;
+    ctx.beginPath();if(ctx.roundRect){ctx.roundRect(r.x-13,r.y-12,9,24,3);ctx.roundRect(r.x+4,r.y-12,9,24,3)}else{ctx.rect(r.x-13,r.y-12,9,24);ctx.rect(r.x+4,r.y-12,9,24)}ctx.fill();
+    if(open){ctx.strokeStyle=hexA(C.cl,.5);ctx.lineWidth=2;ctx.beginPath();ctx.arc(r.x,r.y,18+Math.sin(t/90)*2,0,Math.PI*2);ctx.stroke()}
+  });
+  // iones cloruro
+  ions.forEach(i=>{const a=1-(t-i.t0)/1600;ctx.fillStyle=hexA(C.cl,Math.max(0,a));ctx.beginPath();ctx.arc(i.x,i.y,3.6,0,Math.PI*2);ctx.fill()});
+  // GABA
+  gaba.forEach(p=>{ctx.fillStyle=p.state==='bound'?C['gaba-strong']:C.gaba;ctx.beginPath();ctx.arc(p.x,p.y,3.6,0,Math.PI*2);ctx.fill()});
+  uptakes.forEach(u=>{const k=(t-u.t0)/900;ctx.globalAlpha=1-k;ctx.fillStyle=u.astro?C.warn:C.gaba;ctx.beginPath();ctx.arc(u.x+(u.tx-u.x)*k,u.y+(u.ty-u.y)*k,3.4,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1});
+  // etiquetas
+  ctx.font='700 14px "Atkinson Hyperlegible", sans-serif';ctx.textAlign='left';ctx.fillStyle=C.fg;
+  ctx.fillText('Neurona presináptica (GABAérgica)',165,92+0);
+  ctx.fillStyle=C.muted;ctx.font='13px "Atkinson Hyperlegible", sans-serif';
+  ctx.fillText('Hendidura sináptica · ~20 nm',20,246);
+  ctx.fillStyle=C.fg;ctx.font='700 14px "Atkinson Hyperlegible", sans-serif';
+  ctx.fillText('Neurona postsináptica',120,322);
+  ctx.textAlign='right';ctx.fillText('Astrocito',790,140);
+  ctx.textAlign='left';ctx.font='600 11px "JetBrains Mono", monospace';ctx.fillStyle=C.muted;
+  ctx.fillText('GABA-A',receptors[0].x-22,receptors[0].y+28);
+  ctx.fillText('GAT-1',transporters[0].x-20,transporters[0].y-14);
+  ctx.fillText('GAT-3',682,232);
+  ctx.fillText('axón',412,24);
+  // osciloscopio
+  const ox=130,oy=362,ow=490,oh=130;
+  ctx.fillStyle=hexA(C.bg,.8);ctx.strokeStyle=C.line;ctx.lineWidth=1;
+  ctx.beginPath();if(ctx.roundRect)ctx.roundRect(ox,oy,ow,oh,8);else ctx.rect(ox,oy,ow,oh);ctx.fill();ctx.stroke();
+  const vy=v=>oy+20+(v-(-66))/(-80-(-66))*(oh-36);
+  ctx.setLineDash([4,5]);ctx.strokeStyle=C.line;ctx.beginPath();ctx.moveTo(ox+8,vy(-70));ctx.lineTo(ox+ow-8,vy(-70));ctx.stroke();ctx.setLineDash([]);
+  ctx.strokeStyle=C.cl;ctx.lineWidth=2.4;ctx.beginPath();
+  hist.forEach((v,i)=>{const x=ox+8+i*(ow-16)/260;i?ctx.lineTo(x,vy(v)):ctx.moveTo(x,vy(v))});ctx.stroke();
+  ctx.font='600 11px "JetBrains Mono", monospace';ctx.fillStyle=C.muted;ctx.textAlign='left';
+  ctx.fillText('Potencial postsináptico',ox+10,oy+16);ctx.fillText('−70 mV',ox+10,vy(-70)-5);
+  ctx.textAlign='right';ctx.fillStyle=C.cl;ctx.font='700 14px "JetBrains Mono", monospace';
+  ctx.fillText(V.toFixed(1).replace('-','−')+' mV',ox+ow-12,oy+18);
+  if(phase!==lastPhaseShown){lastPhaseShown=phase;capEl.textContent=CAPS[phase];phaseLis.forEach(li=>li.classList.toggle('active',+li.dataset.p===phase))}
+}
+function loop(now){
+  const dt=Math.min(50,now-lastT||16); lastT=now;
+  if(playing){step(dt,now);drawSyn(now);requestAnimationFrame(loop)}
+  else drawSyn(now);
+}
+// fotograma inicial con una liberación en curso para que la lámina se entienda en reposo
+(function prime(){const t0=performance.now()-1500;lastFire=t0;tNow=t0;release(t0);for(let i=0;i<70;i++)step(16.7,t0+i*16.7+700);tNow=performance.now();lastFire=tNow-2200;drawSyn(tNow)})();
+lastT=performance.now();
+if(playing)requestAnimationFrame(loop);
+
+/* ---------- Osciloscopio del equilibrio ---------- */
+const scope=document.getElementById('scope'), lvl=document.getElementById('lvl');
+const SW=640,SH=320;
+let trace=[], vm=-70, spikePhase=-1, burst=0, spikes=[], lastS=0;
+const stateChip=document.getElementById('state-chip'), stateTitle=document.getElementById('state-title'), stateIntro=document.getElementById('state-intro'), consEl=document.getElementById('cons'), rateEl=document.getElementById('rate');
+const STATES={
+  low:{chip:'Déficit de GABA',cls:'low',title:'El sistema queda sin freno',intro:'Cuando el cerebro produce menos GABA del necesario aparece hiperactividad neuronal.',items:[
+    ['Ansiedad y ataques de pánico','El cerebro no logra autorregular el estrés o la agitación.'],
+    ['Insomnio','Cuesta desacelerar la actividad mental para conciliar o mantener el sueño.'],
+    ['Tensión muscular e hiperactividad','Rigidez física, inquietud o temblores.'],
+    ['Irritabilidad y cambios de humor','Menor tolerancia a los estímulos del entorno.'],
+    ['Riesgo de convulsiones','Con niveles críticamente bajos se facilitan descargas eléctricas descontroladas (epilepsia).']]},
+  ok:{chip:'Equilibrio',cls:'ok',title:'Actividad ordenada',intro:'El GABA frena la sobreexcitación justo lo necesario: las neuronas disparan cuando deben y el cerebro mantiene la calma y la estabilidad mental.',items:[
+    ['Calma y estabilidad','Las respuestas de miedo y ansiedad quedan bajo control.'],
+    ['Sueño reparador','La actividad mental puede desacelerar por la noche.'],
+    ['Movimiento coordinado','Los circuitos motores seleccionan y frenan movimientos con precisión.']]},
+  high:{chip:'Exceso de GABA',cls:'high',title:'Inhibición excesiva',intro:'Un exceso de actividad GABAérgica ralentiza la función cerebral.',items:[
+    ['Somnolencia extrema y sedación','Cansancio persistente, letargo e incapacidad para mantenerse alerta.'],
+    ['Dificultades cognitivas','Procesamiento lento, fallos de memoria a corto plazo y problemas de concentración.'],
+    ['Hipotonía y debilidad muscular','Falta de fuerza o coordinación motora lenta.'],
+    ['Aplanamiento afectivo','Apatía, embotamiento emocional o desinterés generalizado.'],
+    ['Depresión del centro respiratorio','En situaciones extremas, sobre todo con fármacos como benzodiacepinas o sedantes, puede bajar mucho la frecuencia respiratoria y cardíaca.']]}
+};
+let curState='';
+function renderState(){
+  const s=+lvl.value, k=s<=30?'low':s>=70?'high':'ok';
+  if(k===curState)return; curState=k; const S=STATES[k];
+  stateChip.textContent=S.chip; stateChip.className='state '+S.cls;
+  stateTitle.textContent=S.title; stateIntro.textContent=S.intro;
+  consEl.innerHTML=''; S.items.forEach(([b,sp])=>{const li=document.createElement('li');const B=document.createElement('b');B.textContent=b;const P=document.createElement('span');P.textContent=sp;li.append(B,P);consEl.append(li)});
+}
+lvl.addEventListener('input',renderState); renderState();
+function rateFor(s){return s<50? 4+(50-s)/50*20 : Math.max(0.15, 4-(s-50)/50*3.9)}
+function base(s){return s<50? -70+(50-s)/50*8 : -70-(s-50)/50*8}
+function scopeStep(dt,t){
+  const s=+lvl.value, r=rateFor(s);
+  const n=Math.max(1,Math.round(dt/8));
+  for(let i=0;i<n;i++){
+    let target=base(s)+(Math.random()-.5)*(s<30?3:1.2);
+    if(spikePhase<0){
+      let p=r*0.008;
+      if(s<15){burst-=0.008; if(burst<=0 && Math.random()<0.004){burst=0.9} if(burst>0)p*=3.5; else p*=.4}
+      if(Math.random()<p){spikePhase=0;spikes.push(t)}
+      vm+= (target-vm)*0.08;
+    } else {
+      spikePhase+=1;
+      if(spikePhase<3) vm=-55+spikePhase*28; else if(spikePhase<6) vm=30-(spikePhase-3)*40; else if(spikePhase<12) vm=-78+(spikePhase-6)*1; else spikePhase=-1;
+    }
+    trace.push(vm); if(trace.length>420)trace.shift();
+  }
+  spikes=spikes.filter(x=>t-x<3000);
+  if(t-lastS>500){lastS=t;rateEl.textContent=(spikes.length/3).toFixed(1).replace('.',',')+' disparos/s'}
+}
+function drawScope(){
+  const ctx=fitCanvas(scope,SW,SH);
+  ctx.clearRect(-SW,-SH,SW*3,SH*3);
+  ctx.fillStyle=C.bg;ctx.fillRect(0,0,SW,SH);
+  const L=64,R=SW-14,T=16,B=SH-24;
+  const y=v=>T+(40-v)/(40-(-90))*(B-T);
+  ctx.strokeStyle=C.line;ctx.lineWidth=1;
+  ctx.font='600 11px "JetBrains Mono", monospace';ctx.fillStyle=C.muted;ctx.textAlign='right';ctx.textBaseline='middle';
+  [30,0,-55,-70,-85].forEach(v=>{ctx.setLineDash(v===-55?[5,5]:[]);ctx.strokeStyle=v===-55?hexA(C.glu,.7):C.line;ctx.beginPath();ctx.moveTo(L,y(v));ctx.lineTo(R,y(v));ctx.stroke();ctx.fillStyle=v===-55?C.glu:C.muted;ctx.fillText((v>0?'+':'')+String(v).replace('-','−'),L-8,y(v))});
+  ctx.setLineDash([]);
+  ctx.textAlign='left';ctx.fillStyle=C.glu;ctx.fillText('umbral',L+6,y(-55)-9);
+  ctx.fillStyle=C.muted;ctx.save();ctx.translate(14,(T+B)/2);ctx.rotate(-Math.PI/2);ctx.textAlign='center';ctx.fillText('mV',0,0);ctx.restore();
+  const s=+lvl.value, col=s<=30?C.glu:s>=70?C.gaba:C.cl;
+  ctx.strokeStyle=col;ctx.lineWidth=2;ctx.lineJoin='round';ctx.beginPath();
+  trace.forEach((v,i)=>{const x=L+i*(R-L)/420;i?ctx.lineTo(x,y(v)):ctx.moveTo(x,y(v))});ctx.stroke();
+}
+let sl=performance.now();
+for(let i=0;i<60;i++)scopeStep(50,sl-3000+i*50);
+drawScope();
+function sloop(now){const dt=Math.min(60,now-sl);sl=now;scopeStep(dt,now);drawScope();requestAnimationFrame(sloop)}
+if(!reduce)requestAnimationFrame(sloop); else lvl.addEventListener('input',()=>{for(let i=0;i<60;i++)scopeStep(50,performance.now());drawScope()});
+
+/* ---------- arranque molécula ---------- */
+function mloop(t){if(!drag)ay+=molVel;drawMol(t);requestAnimationFrame(mloop)}
+drawMol(0);
+if(!reduce)requestAnimationFrame(mloop);
+addEventListener('resize',()=>{drawMol(0);drawScope();drawSyn(performance.now())});
+// pentámero girando lentamente
+const pent=document.getElementById('pent');
+if(!reduce){let a=0;(function rot(){a+=.12;pent.style.transform=`rotate(${a}deg)`;pent.querySelectorAll('text').forEach(tx=>{const x=tx.getAttribute('x'),y=tx.getAttribute('y');tx.setAttribute('transform',`rotate(${-a} ${x} ${y})`)});requestAnimationFrame(rot)})()}
+})();
+</script>
+
+</body>
+</html>
